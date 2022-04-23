@@ -81,7 +81,7 @@ def roll_d20():
         print("\033[1;31;47mUh-oh, natural one! Critical fail!\033[0m")
         return 1
     elif d20 >=2 and d20 <=19:
-        print(int(f"{d20}"))
+        print(f"{d20}")
         return d20
     else:
         print("\033[1;32;40mNatural twenty! Critical success!\033[0m")
