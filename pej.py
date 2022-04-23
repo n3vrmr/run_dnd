@@ -8,6 +8,9 @@ Created on Sat Apr 23 02:55:10 2022
 
 char_level = int(input("Character level: "))
 def proficiency_mod():
+    """ Defines your proficiency modifier according to your character level.
+    
+    """
     if char_level <=4:
         return 2
     elif char_level >=5 and char_level <=8:
@@ -19,4 +22,4 @@ def proficiency_mod():
     elif char_level >=17 and char_level <=20:
         return 6
 
-print(f"Proficiency mod: {proficiency_mod()}")
+print(f"Proficiency modifier: {proficiency_mod()}")
