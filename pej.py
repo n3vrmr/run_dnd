@@ -4,6 +4,7 @@ Created on Sat Apr 23 02:55:10 2022
 
 @author: Nevermore
 """
+# This is the second file
 
 char_level = int(input("Character level: "))
 def proficiency_mod():
