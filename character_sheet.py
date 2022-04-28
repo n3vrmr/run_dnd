@@ -105,5 +105,3 @@ def ability_checks():
     elif check == "survival":
         print(d.roll(1,20) + ab.ability_mods.get("Wisdom"))
         return d.roll(1,20) + ab.ability_mods.get("Wisdom")
-
-saving_throws()
