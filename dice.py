@@ -26,7 +26,6 @@ def roll(n:int,d:int):
         print("Heads")
     elif d == 2 and total == 2:
         print("Tails")
-    print(total)
     return total
 
 def main():
