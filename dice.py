@@ -21,11 +21,11 @@ def roll(n:int,d:int):
         total = total + result
     if d == 20 and total == 1:
         print("\033[1;31;47mUh-oh, natural one! Critical fail!\033[0m")
-    if d == 20 and total == 20:
+    elif d == 20 and total == 20:
         print("\033[1;32;40mNatural twenty! Critical success!\033[0m")
     if d == 2 and total == 1:
         print("Heads")
-    if d == 2 and total == 2:
+    elif d == 2 and total == 2:
         print("Tails")
     print(total)
     return total
