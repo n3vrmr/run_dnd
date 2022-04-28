@@ -12,6 +12,7 @@ import numpy as np
 def roll(n:int,d:int):
     """Rolls a number of 'n' dice with a 'd' number of sides and adds the results of every die.
     You can use the arguments (1,100) to roll a percentile die.
+    You can use the arguments (1,2) to make a coin toss.
     Rolling a 20 sided die can have special results if you get a 1 or a 20.
     """
     total = 0
@@ -22,6 +23,10 @@ def roll(n:int,d:int):
         print("\033[1;31;47mUh-oh, natural one! Critical fail!\033[0m")
     if d == 20 and total == 20:
         print("\033[1;32;40mNatural twenty! Critical success!\033[0m")
+    if d == 2 and total == 1:
+        print("Heads")
+    if d == 2 and total == 2:
+        print("Tails")
     print(total)
     return total
     if d == 100:
