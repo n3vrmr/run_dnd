@@ -25,3 +25,6 @@ def proficiency_bonus():
 print("Proficiency bonus:",proficiency_bonus())
 
 expertise = proficiency_bonus()*2
+
+if __name__ == '__main__':
+    print("Rogues and bards are broken...")
