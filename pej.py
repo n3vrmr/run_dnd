@@ -8,7 +8,7 @@ Created on Sat Apr 23 02:55:10 2022
 
 char_level = int(input("Character level: "))
 def proficiency_bonus():
-    """ Defines your proficiency modifier according to your character level.
+    """ Defines your proficiency bonus according to your character level.
     
     """
     if char_level <=4:
