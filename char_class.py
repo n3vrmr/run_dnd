@@ -16,12 +16,14 @@ def char_class():
     if char_class == "Barbarian":
         if char_level == 1:
             hp_first = 12 + ab.ability_mods.get("Constitution")
-        print("HP:",hp_first) # UnboundLocalError: local variable 'hp_first' referenced before assignment, error only happens when char_level > 1
-        return hp_first
-        if char_level > 1:
-            hp = hp_first + (char_level - 1) * (d.roll(1,12)+ab.ability_mods.get("Constitution"))
-        print("HP:",hp)
-        return hp
+            hp = hp_first
+            print("HP:",hp)
+            return hp
+        elif char_level > 1:
+            hp_first = 12 + ab.ability_mods.get("Constitution")
+            hp = hp_first + (d.roll((char_level - 1),12) + (char_level - 1) * ab.ability_mods.get("Constitution"))
+            print("HP:",hp)
+            return hp
         
 char_class()
 
