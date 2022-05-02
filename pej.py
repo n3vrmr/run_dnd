@@ -38,7 +38,7 @@ if ch_c.char_c == "Barbarian":
         
 skill_proficiencies = {}
 if ch_c.char_c == "Barbarian":
-    player_choice = input("Choose two from Animal Handling, Athletics, Intimidation, Nature, Perception, and Survival: ").lower()
+    player_choice = input("Skill proficiencies - Choose two from Animal Handling, Athletics, Intimidation, Nature, Perception, and Survival: ").lower()
 
 
 proficient = True
