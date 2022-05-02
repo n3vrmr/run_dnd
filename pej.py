@@ -24,17 +24,12 @@ def proficiency_bonus():
         return 6
 
 
-save_proficiencies = {}
+save_proficiencies = {"Strength":False,"Dexterity":False,"Constitution":False,
+                      "Intelligence":False,"Wisdom":False,"Charisma":False}
+
 if ch_c.char_c == "Barbarian":
-    proficient = True
-    while proficient:
-        save_proficiencies["Strength"] = True
-        save_proficiencies["Dexterity"] = False
-        save_proficiencies["Constitution"] = True
-        save_proficiencies["Intelligence"] = False
-        save_proficiencies["Wisdom"] = False
-        save_proficiencies["Charisma"] = False
-        proficient = False
+    save_proficiencies["Strength"] = True
+    save_proficiencies["Constitution"] = True
         
 skill_proficiencies = {}
 if ch_c.char_c == "Barbarian":
