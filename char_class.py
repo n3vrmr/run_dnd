@@ -2,7 +2,7 @@
 """
 Created on Fri Apr 29 15:46:19 2022
 
-@author: Nevermore
+@author: Nevermore, Luiza
 """
 # This is the third file
 
@@ -18,15 +18,91 @@ def char_class():
         if char_level == 1:
             hp_first = 12 + ab.ability_mods.get("Constitution")
             hp = hp_first
-            print("HP:",hp)
-            return hp
         elif char_level > 1:
             hp_first = 12 + ab.ability_mods.get("Constitution")
             hp = hp_first + (d.roll((char_level - 1),12) + (char_level - 1) * ab.ability_mods.get("Constitution"))
-            print("HP:",hp)
-            return hp
+    elif char_c == "Bard":
+         if char_level == 1:
+            hp_first = 8 + ab.ability_mods.get("Constitution")
+            hp = hp_first
+         elif char_level > 1:
+            hp_first = 8 + ab.ability_mods.get("Constitution")
+            hp = hp_first + (d.roll((char_level - 1),8) + (char_level - 1) * ab.ability_mods.get("Constitution"))
+    elif char_c == "Cleric":
+         if char_level == 1:
+            hp_first = 8 + ab.ability_mods.get("Constitution")
+            hp = hp_first
+         elif char_level > 1:
+            hp_first = 8 + ab.ability_mods.get("Constitution")
+            hp = hp_first + (d.roll((char_level - 1),8) + (char_level - 1) * ab.ability_mods.get("Constitution"))
+    elif char_c == "Druid":
+         if char_level == 1:
+            hp_first = 8 + ab.ability_mods.get("Constitution")
+            hp = hp_first
+         elif char_level > 1:
+            hp_first = 8 + ab.ability_mods.get("Constitution")
+            hp = hp_first + (d.roll((char_level - 1),8) + (char_level - 1) * ab.ability_mods.get("Constitution"))
+    elif char_c == "Fighter":
+         if char_level == 1:
+            hp_first = 10 + ab.ability_mods.get("Constitution")
+            hp = hp_first
+         elif char_level > 1:
+            hp_first = 10 + ab.ability_mods.get("Constitution")
+            hp = hp_first + (d.roll((char_level - 1),10) + (char_level - 1) * ab.ability_mods.get("Constitution"))
+    elif char_c == "Monk":
+         if char_level == 1:
+            hp_first = 8 + ab.ability_mods.get("Constitution")
+            hp = hp_first
+         elif char_level > 1:
+            hp_first = 8 + ab.ability_mods.get("Constitution")
+            hp = hp_first + (d.roll((char_level - 1),8) + (char_level - 1) * ab.ability_mods.get("Constitution"))
+    elif char_c == "Paladin":
+         if char_level == 1:
+            hp_first = 10 + ab.ability_mods.get("Constitution")
+            hp = hp_first
+         elif char_level > 1:
+            hp_first = 10 + ab.ability_mods.get("Constitution")
+            hp = hp_first + (d.roll((char_level - 1),10) + (char_level - 1) * ab.ability_mods.get("Constitution"))
+    elif char_c == "Ranger":
+         if char_level == 1:
+            hp_first = 10 + ab.ability_mods.get("Constitution")
+            hp = hp_first
+         elif char_level > 1:
+            hp_first = 10 + ab.ability_mods.get("Constitution")
+            hp = hp_first + (d.roll((char_level - 1),10) + (char_level - 1) * ab.ability_mods.get("Constitution"))
+    elif char_c == "Rogue":
+         if char_level == 1:
+            hp_first = 8 + ab.ability_mods.get("Constitution")
+            hp = hp_first
+         elif char_level > 1:
+            hp_first = 8 + ab.ability_mods.get("Constitution")
+            hp = hp_first + (d.roll((char_level - 1),8) + (char_level - 1) * ab.ability_mods.get("Constitution"))
+    elif char_c == "Sorcerer":
+         if char_level == 1:
+            hp_first = 6 + ab.ability_mods.get("Constitution")
+            hp = hp_first
+         elif char_level > 1:
+            hp_first = 6 + ab.ability_mods.get("Constitution")
+            hp = hp_first + (d.roll((char_level - 1),6) + (char_level - 1) * ab.ability_mods.get("Constitution"))
+    elif char_c == "Warlock":
+          if char_level == 1:
+            hp_first = 8 + ab.ability_mods.get("Constitution")
+            hp = hp_first
+          elif char_level > 1:
+            hp_first = 8 + ab.ability_mods.get("Constitution")
+            hp = hp_first + (d.roll((char_level - 1),8) + (char_level - 1) * ab.ability_mods.get("Constitution"))
+    elif char_c == "Wizard":
+         if char_level == 1:
+            hp_first = 6 + ab.ability_mods.get("Constitution")
+            hp = hp_first
+         elif char_level > 1:
+            hp_first = 6 + ab.ability_mods.get("Constitution")
+            hp = hp_first + (d.roll((char_level - 1),6) + (char_level - 1) * ab.ability_mods.get("Constitution"))
+            
+    print("HP:",hp)
+    return hp
     return char_c
-        
+
 char_class()
 
 if __name__ == '__main__':

@@ -30,11 +30,65 @@ save_proficiencies = {"Strength":False,"Dexterity":False,"Constitution":False,
 if ch_c.char_c == "Barbarian":
     save_proficiencies["Strength"] = True
     save_proficiencies["Constitution"] = True
+elif ch_c.char_c == "Bard":
+    save_proficiencies["Dexterity"] = True
+    save_proficiencies["Charisma"] = True
+elif ch_c.char_c == "Cleric":
+    save_proficiencies["Wisdom"] = True
+    save_proficiencies["Charisma"] = True
+elif ch_c.char_c == "Druid":
+    save_proficiencies["Intelligence"] = True
+    save_proficiencies["Wisdom"] = True
+elif ch_c.char_c == "Fighter":
+    save_proficiencies["Strength"] = True
+    save_proficiencies["Constitution"] = True
+elif ch_c.char_c == "Monk":
+    save_proficiencies["Strength"] = True
+    save_proficiencies["Dexterity"] = True
+elif ch_c.char_c == "Paladin":
+    save_proficiencies["Wisdom"] = True
+    save_proficiencies["Charisma"] = True
+elif ch_c.char_c == "Ranger":
+    save_proficiencies["Strength"] = True
+    save_proficiencies["Dexterity"] = True
+elif ch_c.char_c == "Rogue":
+    save_proficiencies["Dexterity"] = True
+    save_proficiencies["Intelligence"] = True
+elif ch_c.char_c == "Sorcerer":
+    save_proficiencies["Constitution"] = True
+    save_proficiencies["Charisma"] = True
+elif ch_c.char_c == "Warlock":
+    save_proficiencies["Wisdom"] = True
+    save_proficiencies["Charisma"] = True
+elif ch_c.char_c == "Wizard":
+    save_proficiencies["Intelligence"] = True
+    save_proficiencies["Wisdom"] = True
         
 skill_proficiencies = {}
 if ch_c.char_c == "Barbarian":
     player_choice = input("Skill proficiencies - Choose two from Animal Handling, Athletics, Intimidation, Nature, Perception, and Survival: ").lower()
-
+elif ch_c.char_c == "Bard":
+    player_choice = input("Skill proficiencies - Choose any three: ").lower()
+elif ch_c.char_c == "Cleric":
+    player_choice = input("Skill proficiencies - Choose two from History, Insight, Medicine, Persuasion, Religion: ").lower()
+elif ch_c.char_c == "Druid":
+    player_choice = input("Skill proficiencies - Choose two from Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, and Survival: ").lower()
+elif ch_c.char_c == "Fighter":
+    player_choice = input("Skill proficiencies - Choose two from Acrobatics, Animal Handling, Athletics, History, Insight, Intimidation, Perception, and Survival: ").lower()
+elif ch_c.char_c == "Monk":
+    player_choice = input("Skill proficiencies - Choose two from Acrobatics, Athletics, History, Insight, Religion, and Stealth: ").lower()
+elif ch_c.char_c == "Paladin":
+    player_choice = input("Skill proficiencies - Choose two from Athletics, Insight, Intimidation, Medicine, Persuasion, and Religion: ").lower()
+elif ch_c.char_c == "Ranger":
+    player_choice = input("Skill proficiencies - Choose three from Animal Handling, Athletics, Insight, Investigation, Nature, Perception, Stealth, and Survival: ").lower()
+elif ch_c.char_c == "Rogue":
+    player_choice = input("Skill proficiencies - Choose four Acrobatics, Athletics, Deception, Insight, Intimidation, Investigation, Perception, Performance, Persuasion, Sleight of Hand, and Stealth: ").lower()
+elif ch_c.char_c == "Sorcerer":
+    player_choice = input("Skill proficiencies - Choose two from Arcana, Deception, Insight, Intimidation, Persuasion, and Religion: ").lower()
+elif ch_c.char_c == "Warlock":
+    player_choice = input("Skill proficiencies - Choose two from Arcana, Deception, History, Intimidation, Investigation, Nature, and Religion: ").lower()
+elif ch_c.char_c == "Wizard":
+    player_choice = input("Skill proficiencies - Choose two from Arcana, History, Insight, Investigation, Medicine, and Religion: ").lower()
 
 proficient = True
 while proficient:

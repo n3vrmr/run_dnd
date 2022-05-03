@@ -11,7 +11,8 @@ import abilities as ab
 import pej
 
 def saving_throws():
-    """Rolls a saving throw with a d20 plus your ability modifier.
+    """Rolls a saving throw with a d20 plus your ability modifier. 
+    If you are proficient, your proficiency bonus is also added.
     """
     save = input("Make a saving throw: ").lower().strip()
     if save == "str_save":
@@ -47,6 +48,7 @@ def saving_throws():
         
 def ability_checks():
     """Rolls an ability check with a d20 plus your ability modifier.
+    If you are proficient, your proficiency bonus is also added.
     """
     check = input("Make an ability check: ").lower().strip()
     if check == "str":
@@ -64,6 +66,7 @@ def ability_checks():
 
 def skill_checks():
     """Rolls a skill check with a d20 plus the relevant ability modifier.
+    If you are proficient, your proficiency bonus is also added.
     """
     check = input("Make a skill check: ").lower().strip()
     if check == "acrobatics":
