@@ -10,6 +10,7 @@ import random as rd
 
 def roll(n:int,d:int,s=False):
     """Rolls a number of 'n' dice with a 'd' number of sides and adds the results of every die.
+    The argument 's' is an optional argument useful for rolling a d20 with either advantage or disadvantage.
     You can use the arguments (1,100) to roll a percentile die.
     You can use the arguments (1,2) to make a coin toss.
     Rolling a 20 sided die can have special results if you get a 1 or a 20.
@@ -29,10 +30,10 @@ def roll(n:int,d:int,s=False):
         print("Heads")
     elif d == 2 and total == 2:
         print("Tails")
-    print("Dice result:",total)
     if s:
         return box
     else:
+        print("Dice result:",total)
         return total
 
 def main():

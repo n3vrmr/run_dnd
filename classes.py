@@ -105,5 +105,8 @@ def char_class():
 
 char_class()
 
-if __name__ == '__main__':
+def main():
     print("Terry Crews is a paladin")
+
+if __name__ == '__main__':
+    main()

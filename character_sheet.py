@@ -160,5 +160,8 @@ def skill_checks():
         else:
             print("Total:",d.roll(1,20) + ab.ability_mods.get("Wisdom"))
 
-if __name__ == '__main__':
+def main():
     print("Let's play some D&D!")
+
+if __name__ == '__main__':
+    main()

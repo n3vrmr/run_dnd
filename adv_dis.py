@@ -2,26 +2,32 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed May  4 16:26:11 2022
-
 @author: Nevermore
 """
 
 import dice as d
 
 # print(d.roll(2,20))
-# result = min(d.roll(2,20,True))
+# game_situation = min(d.roll(2,20,True))
 
-adv = False
-dis = False
 def adv_dis():
     query = input("Query: ")
     if "dis" in query:
-        dis = True
-        result = min(d.roll(2,20,True))
+        rolls = d.roll(2,20,True)
+        game_situation = min(rolls)
+        print("Rolling with disadvantage:",game_situation)
+        if 1 in rolls:
+            print("\033[1;31;47mUh-oh, natural one! Critical fail!\033[0m")
     elif "adv" in query:
-        adv = True
-        result = max(d.roll(2,20,True))
-    print(result)
-    return result
+        rolls = d.roll(2,20,True)
+        game_situation = max(rolls)
+        print("Rolling with advantage:",game_situation)
+        if 20 in rolls:
+            print("\033[1;32;40mNatural twenty! Critical success!\033[0m")
+    return game_situation
 
-adv_dis()
+def main():
+    print("Mote of Possibility")
+    
+if __name__ == '__main__':
+    main()

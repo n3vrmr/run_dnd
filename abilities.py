@@ -31,5 +31,8 @@ while modifier:
 print("Ability scores:",ability_scores)
 print("Ability modifiers:",ability_mods)
 
-if __name__ == '__main__':
+def main():
     print("Low ability scores are always fun!")
+    
+if __name__ == '__main__':
+    main()
