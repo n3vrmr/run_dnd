@@ -6,88 +6,88 @@ Created on Sat Apr 23 02:55:10 2022
 """
 # This is the fourth file
 
-import char_class as ch_c
+import classes
 
 def proficiency_bonus():
     """ Defines your proficiency bonus according to your character level.
     
     """
-    if ch_c.char_level <=4:
+    if classes.char_level <=4:
         return 2
-    elif ch_c.char_level >=5 and ch_c.char_level <=8:
+    elif classes.char_level >=5 and classes.char_level <=8:
         return 3
-    elif ch_c.char_level >=9 and ch_c.char_level <=12:
+    elif classes.char_level >=9 and classes.char_level <=12:
         return 4
-    elif ch_c.char_level >=13 and ch_c.char_level <=16:
+    elif classes.char_level >=13 and classes.char_level <=16:
         return 5
-    elif ch_c.char_level >=17 and ch_c.char_level <=20:
+    elif classes.char_level >=17 and classes.char_level <=20:
         return 6
 
 
 save_proficiencies = {"Strength":False,"Dexterity":False,"Constitution":False,
                       "Intelligence":False,"Wisdom":False,"Charisma":False}
 
-if ch_c.char_c == "Barbarian":
+if classes.char_c == "Barbarian":
     save_proficiencies["Strength"] = True
     save_proficiencies["Constitution"] = True
-elif ch_c.char_c == "Bard":
+elif classes.char_c == "Bard":
     save_proficiencies["Dexterity"] = True
     save_proficiencies["Charisma"] = True
-elif ch_c.char_c == "Cleric":
+elif classes.char_c == "Cleric":
     save_proficiencies["Wisdom"] = True
     save_proficiencies["Charisma"] = True
-elif ch_c.char_c == "Druid":
+elif classes.char_c == "Druid":
     save_proficiencies["Intelligence"] = True
     save_proficiencies["Wisdom"] = True
-elif ch_c.char_c == "Fighter":
+elif classes.char_c == "Fighter":
     save_proficiencies["Strength"] = True
     save_proficiencies["Constitution"] = True
-elif ch_c.char_c == "Monk":
+elif classes.char_c == "Monk":
     save_proficiencies["Strength"] = True
     save_proficiencies["Dexterity"] = True
-elif ch_c.char_c == "Paladin":
+elif classes.char_c == "Paladin":
     save_proficiencies["Wisdom"] = True
     save_proficiencies["Charisma"] = True
-elif ch_c.char_c == "Ranger":
+elif classes.char_c == "Ranger":
     save_proficiencies["Strength"] = True
     save_proficiencies["Dexterity"] = True
-elif ch_c.char_c == "Rogue":
+elif classes.char_c == "Rogue":
     save_proficiencies["Dexterity"] = True
     save_proficiencies["Intelligence"] = True
-elif ch_c.char_c == "Sorcerer":
+elif classes.char_c == "Sorcerer":
     save_proficiencies["Constitution"] = True
     save_proficiencies["Charisma"] = True
-elif ch_c.char_c == "Warlock":
+elif classes.char_c == "Warlock":
     save_proficiencies["Wisdom"] = True
     save_proficiencies["Charisma"] = True
-elif ch_c.char_c == "Wizard":
+elif classes.char_c == "Wizard":
     save_proficiencies["Intelligence"] = True
     save_proficiencies["Wisdom"] = True
         
 skill_proficiencies = {}
-if ch_c.char_c == "Barbarian":
+if classes.char_c == "Barbarian":
     player_choice = input("Skill proficiencies - Choose two from Animal Handling, Athletics, Intimidation, Nature, Perception, and Survival: ").lower()
-elif ch_c.char_c == "Bard":
+elif classes.char_c == "Bard":
     player_choice = input("Skill proficiencies - Choose any three: ").lower()
-elif ch_c.char_c == "Cleric":
+elif classes.char_c == "Cleric":
     player_choice = input("Skill proficiencies - Choose two from History, Insight, Medicine, Persuasion, Religion: ").lower()
-elif ch_c.char_c == "Druid":
+elif classes.char_c == "Druid":
     player_choice = input("Skill proficiencies - Choose two from Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, and Survival: ").lower()
-elif ch_c.char_c == "Fighter":
+elif classes.char_c == "Fighter":
     player_choice = input("Skill proficiencies - Choose two from Acrobatics, Animal Handling, Athletics, History, Insight, Intimidation, Perception, and Survival: ").lower()
-elif ch_c.char_c == "Monk":
+elif classes.char_c == "Monk":
     player_choice = input("Skill proficiencies - Choose two from Acrobatics, Athletics, History, Insight, Religion, and Stealth: ").lower()
-elif ch_c.char_c == "Paladin":
+elif classes.char_c == "Paladin":
     player_choice = input("Skill proficiencies - Choose two from Athletics, Insight, Intimidation, Medicine, Persuasion, and Religion: ").lower()
-elif ch_c.char_c == "Ranger":
+elif classes.char_c == "Ranger":
     player_choice = input("Skill proficiencies - Choose three from Animal Handling, Athletics, Insight, Investigation, Nature, Perception, Stealth, and Survival: ").lower()
-elif ch_c.char_c == "Rogue":
+elif classes.char_c == "Rogue":
     player_choice = input("Skill proficiencies - Choose four Acrobatics, Athletics, Deception, Insight, Intimidation, Investigation, Perception, Performance, Persuasion, Sleight of Hand, and Stealth: ").lower()
-elif ch_c.char_c == "Sorcerer":
+elif classes.char_c == "Sorcerer":
     player_choice = input("Skill proficiencies - Choose two from Arcana, Deception, Insight, Intimidation, Persuasion, and Religion: ").lower()
-elif ch_c.char_c == "Warlock":
+elif classes.char_c == "Warlock":
     player_choice = input("Skill proficiencies - Choose two from Arcana, Deception, History, Intimidation, Investigation, Nature, and Religion: ").lower()
-elif ch_c.char_c == "Wizard":
+elif classes.char_c == "Wizard":
     player_choice = input("Skill proficiencies - Choose two from Arcana, History, Insight, Investigation, Medicine, and Religion: ").lower()
 
 proficient = True
