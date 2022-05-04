@@ -7,9 +7,6 @@ Created on Wed May  4 16:26:11 2022
 
 import dice as d
 
-# print(d.roll(2,20))
-# game_situation = min(d.roll(2,20,True))
-
 def adv_dis():
     query = input("Query: ")
     if "dis" in query:
