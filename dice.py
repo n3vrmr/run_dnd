@@ -7,6 +7,7 @@ Created on Fri Apr  8 11:12:06 2022
 # This is the first file
 
 import random as rd
+import time as t
 
 def roll(n:int,d:int,s=False):
     """Rolls a number of 'n' dice with a 'd' number of sides and adds the results of every die.
@@ -22,18 +23,20 @@ def roll(n:int,d:int,s=False):
         total = total + result
         if s:
             box.append(result)
-    if d == 20 and total == 1 and n == 1:
-        print("\033[1;31;47mUh-oh, natural one! Critical fail!\033[0m")
-    elif d == 20 and total == 20 and n == 1:
-        print("\033[1;32;40mNatural twenty! Critical success!\033[0m")
-    elif d == 2 and total == 1:
-        print("Heads")
-    elif d == 2 and total == 2:
-        print("Tails")
+    print("Rolling...")
+    t.sleep(1.8)
     if s:
         return box
     else:
         print("Dice result:",total)
+        if d == 20 and total == 1 and n == 1:
+            print("\033[1;31;47mUh-oh, natural one! Critical fail!\033[0m")
+        elif d == 20 and total == 20 and n == 1:
+            print("\033[1;32;40mNatural twenty! Critical success!\033[0m")
+        elif d == 2 and total == 1:
+            print("Heads")
+        elif d == 2 and total == 2:
+            print("Tails")
         return total
 
 def main():
