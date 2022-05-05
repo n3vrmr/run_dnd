@@ -48,13 +48,4 @@ class Character:
         elif self.Level >=17 and self.Level <=20:
             pb = 6
             return 6
-        self.proficiency_bonus = pb
-        
-
-class Classes(Character):
-    def __init__(self, class_name,
-                 hp_first, hp,
-                 save_proficiencies, skill_proficiencies):
-        global class_name
-        class_name = input("Choose your class: ")
-        
+        self.proficiency_bonus = pb       
