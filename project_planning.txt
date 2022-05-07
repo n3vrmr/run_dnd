@@ -1,0 +1,22 @@
+For the Python D&D 5E Project:
+
+1. Use classes to modify states of a Character
+ - combat state (initiative, combat actions as instances, such as dodge)
+ - advantage/disadvantage state
+ - status conditions as states
+ - death saves (part of unconscious state)
+ - conecentration state
+ - rage state (for barbarian)
+ - inspiration state (created through Bard)
+ - spells that cause states, like faerie fire (class method?)
+
+2. Monster class to define monsters from the monster manual (use Beholder for example)
+ - combat state to define lair actions during initiative
+ - attacks based on monster properties
+
+3. Weapons class, Armor class
+ - divide weapons into their separate types, define if proficiency with them is true or not
+ - divide armor into their separate types (light, medium, heavy)
+
+4. Subclasses as child class of Classes (1 per character class)
+ - think about multiclassing (probably not doing this)
