@@ -34,62 +34,57 @@ class Character:
         then defines the respective ability modifiers according to those values.
         The way the ability modifiers are calculated is as described in the Player's Handbook:
         (ability score - 10), divided by 2 and rounded down.
+        In case you chose to generate a random character, the ability scores will be decided for you instead.
         """
-        print("Enter your ability scores:")
-        t.sleep(1.2)
-        self.ability_scores = {}
-        score = True
-        while score:
-            score = False
-            self.ability_scores["Strength"] = int(input("Strength: "))
-            self.ability_scores["Dexterity"] = int(input("Dexterity: "))
-            self.ability_scores["Constitution"] = int(input("Constitution: "))
-            self.ability_scores["Intelligence"] = int(input("Intelligence: "))
-            self.ability_scores["Wisdom"] = int(input("Wisdom: "))
-            self.ability_scores["Charisma"] = int(input("Charisma: "))
+        if self.random == True:
+            self.ability_scores = {}
+            score = True
+            while score:
+                score = False
+                self.ability_scores["Strength"] = d6_roller.ability_rolls()
+                self.ability_scores["Dexterity"] = d6_roller.ability_rolls()
+                self.ability_scores["Constitution"] = d6_roller.ability_rolls()
+                self.ability_scores["Intelligence"] = d6_roller.ability_rolls()
+                self.ability_scores["Wisdom"] = d6_roller.ability_rolls()
+                self.ability_scores["Charisma"] = d6_roller.ability_rolls()
 
-        self._ability_mods = {}
-        modifier = True
-        while modifier:
-            modifier = False
-            self._ability_mods["Strength"] = (self.ability_scores.get("Strength") - 10)//2
-            self._ability_mods["Dexterity"] = (self.ability_scores.get("Dexterity") - 10)//2
-            self._ability_mods["Constitution"] = (self.ability_scores.get("Constitution") - 10)//2
-            self._ability_mods["Intelligence"] = (self.ability_scores.get("Intelligence") - 10)//2
-            self._ability_mods["Wisdom"] = (self.ability_scores.get("Wisdom") - 10)//2
-            self._ability_mods["Charisma"] = (self.ability_scores.get("Charisma") - 10)//2
-        
-        print("Ability scores:",self.ability_scores)
-        print("Ability modifiers:",self._ability_mods)
-        return
+            self._ability_mods = {}
+            modifier = True
+            while modifier:
+                modifier = False
+                self._ability_mods["Strength"] = (self.ability_scores.get("Strength") - 10)//2
+                self._ability_mods["Dexterity"] = (self.ability_scores.get("Dexterity") - 10)//2
+                self._ability_mods["Constitution"] = (self.ability_scores.get("Constitution") - 10)//2
+                self._ability_mods["Intelligence"] = (self.ability_scores.get("Intelligence") - 10)//2
+                self._ability_mods["Wisdom"] = (self.ability_scores.get("Wisdom") - 10)//2
+                self._ability_mods["Charisma"] = (self.ability_scores.get("Charisma") - 10)//2
+                
+            t.sleep(1.5)
+        else:
+            print("Enter your ability scores:")
+            t.sleep(1.2)
+            self.ability_scores = {}
+            score = True
+            while score:
+                score = False
+                self.ability_scores["Strength"] = int(input("Strength: "))
+                self.ability_scores["Dexterity"] = int(input("Dexterity: "))
+                self.ability_scores["Constitution"] = int(input("Constitution: "))
+                self.ability_scores["Intelligence"] = int(input("Intelligence: "))
+                self.ability_scores["Wisdom"] = int(input("Wisdom: "))
+                self.ability_scores["Charisma"] = int(input("Charisma: "))
     
-    def random_scores(self):
-        """Randomizes your character's ability scores.
-        Hope you're feeling lucky!
-        """
-        self.ability_scores = {}
-        score = True
-        while score:
-            self.ability_scores["Strength"] = d6_roller.ability_rolls()
-            self.ability_scores["Dexterity"] = d6_roller.ability_rolls()
-            self.ability_scores["Constitution"] = d6_roller.ability_rolls()
-            self.ability_scores["Intelligence"] = d6_roller.ability_rolls()
-            self.ability_scores["Wisdom"] = d6_roller.ability_rolls()
-            self.ability_scores["Charisma"] = d6_roller.ability_rolls()
-            score = False
-            
-        self._ability_mods = {}
-        modifier = True
-        while modifier:
-            self._ability_mods["Strength"] = (self.ability_scores.get("Strength") - 10)//2
-            self._ability_mods["Dexterity"] = (self.ability_scores.get("Dexterity") - 10)//2
-            self._ability_mods["Constitution"] = (self.ability_scores.get("Constitution") - 10)//2
-            self._ability_mods["Intelligence"] = (self.ability_scores.get("Intelligence") - 10)//2
-            self._ability_mods["Wisdom"] = (self.ability_scores.get("Wisdom") - 10)//2
-            self._ability_mods["Charisma"] = (self.ability_scores.get("Charisma") - 10)//2
-            modifier = False
+            self._ability_mods = {}
+            modifier = True
+            while modifier:
+                modifier = False
+                self._ability_mods["Strength"] = (self.ability_scores.get("Strength") - 10)//2
+                self._ability_mods["Dexterity"] = (self.ability_scores.get("Dexterity") - 10)//2
+                self._ability_mods["Constitution"] = (self.ability_scores.get("Constitution") - 10)//2
+                self._ability_mods["Intelligence"] = (self.ability_scores.get("Intelligence") - 10)//2
+                self._ability_mods["Wisdom"] = (self.ability_scores.get("Wisdom") - 10)//2
+                self._ability_mods["Charisma"] = (self.ability_scores.get("Charisma") - 10)//2
         
-        t.sleep(1.5)
         print("Ability scores:",self.ability_scores)
         print("Ability modifiers:",self._ability_mods)
         return
@@ -118,16 +113,10 @@ class Character:
 #     def __init__(self, cls):
         
 c1 = Character("name", 0)
-if c1.random == True:
-    c1.random_scores()
-else:
-    c1.abilities()
+c1.abilities()
     
 c2 = Character("name", 0)
-if c2.random == True:
-    c2.random_scores()
-else:
-    c2.abilities()
+c2.abilities()
 
 if c2.ability_scores.get("Intelligence") < 10:
     print(f"{c2._name} is not very smart...")
