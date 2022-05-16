@@ -29,7 +29,7 @@ For the Python D&D 5E Project:
 6. Issues:
  - how to add to the values of the ability scores
  - figure out why the ability scores cannot be accessed through Race instance
- - figure out why the self.random variable is not accessible through Race
+ - figure out why the random attribute is not accessible through Race
 
 From python.org:
 "Classes provide a means of bundling data and functionality together. 
