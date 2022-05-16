@@ -4,7 +4,7 @@ For the Python D&D 5E Project:
  - Levels as states (level up class method, hitpoints, multiclassing easier)
  - combat state (initiative, combat actions as instances, such as dodge)
  - advantage/disadvantage state
- - status conditions as states
+ - status conditions: use class to define them and use Aggregation(/Association?) to link them to Character
  - death saves (part of unconscious state)
  - conecentration state
  - rage state (for barbarian)
@@ -25,6 +25,11 @@ For the Python D&D 5E Project:
 
 5. Inventory
  - Use Aggregation to create Inventory class
+ 
+6. Issues:
+ - how to add to the values of the ability scores
+ - figure out why the ability scores cannot be accessed through Race instance
+ - figure out why the self.random variable is not accessible through Race
 
 From python.org:
 "Classes provide a means of bundling data and functionality together. 
