@@ -94,6 +94,16 @@ class Character:
         return self.ability_scores
     
     def increase_one_score(self):
+        """
+        Method for increasing one of your ability scores by 2 points,
+        based on player choice.
+
+        Returns
+        -------
+        TYPE
+            DESCRIPTION.
+
+        """
         choice = input("Choose an ability score to increase by 2: ").strip().lower()
         if "Strength" in choice:
             self.ability_scores["Strength"] = self.ability_scores["Strength"] + 2
@@ -112,6 +122,16 @@ class Character:
         return self.ability_scores
     
     def increase_two_scores(self):
+        """
+        Method for increasing two of your ability scores by 1 point,
+        based on player choice.
+
+        Returns
+        -------
+        TYPE
+            DESCRIPTION.
+
+        """
         choice = input("Choose two ability scores to increase by 1: ").strip().lower()
         if "Strength" in choice:
             self.ability_scores["Strength"] = self.ability_scores["Strength"] + 1
@@ -130,7 +150,14 @@ class Character:
         return self.ability_scores
         
     def proficiency(self):
-        """Defines your character's proficiency bonus based on their level.
+        """
+        Defines your character's proficiency bonus based on their level.
+        
+        Returns
+        -------
+        self.ability_scores: a dictionary with your character's abilities as
+        the keys, and the scores as the associated values.
+        
         """
         if self.level <=4:
             pb = 2
@@ -146,10 +173,21 @@ class Character:
             return pb
         elif self.level >=17 and self.level <=20:
             pb = 6
-            return pb
         self.proficiency_bonus = pb
+        return pb
         
     def adv_dis(self):
+        """
+        Make a roll with either advantage or disadvantage.
+        If you have both advantage and disadvantage, they cancel out.
+        Advantage and disadvantage do not stack.
+
+        Returns
+        -------
+        game_situation : the highest roll for advantage and the lowest
+        roll for disadvantage.
+
+        """
         if self.advantage == True:
             rolls = d.roll(2,20,True)
             game_situation = max(rolls)
@@ -162,6 +200,9 @@ class Character:
             print("Rolling with disadvantage:",game_situation)
             if 1 in rolls:
                 print("\033[1;31;47mUh-oh, natural one! Critical fail!\033[0m")
+            elif self.advantage == True and self.disadvantage == True:
+                self.advantage == False
+                self.disadvantage == False
         return game_situation
         
 class Race(Character):
@@ -211,15 +252,18 @@ c1 = Character("name", 0)
 c1.abilities()
 c1.advantage = True
 c1.adv_dis()
+c1.increase_one_score()
 r1 = Race()
+r1.ability_score_increase()
     
 c2 = Character("name", 0)
 c2.abilities()
 c2.disadvantage = True
 c2.adv_dis()
+c2.increase_two_scores()
 
-if c2.ability_scores.get("Intelligence") < 10:
-    print(f"{c2._name} is not very smart...")
+# if r1.ability_scores.get("Intelligence") < 10:
+#     print(f"{r1._name} is not very smart...")
     
 print("Proficiency bonus:",c1.proficiency())
 print(c1._name,"is ready to rock")

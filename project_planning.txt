@@ -10,6 +10,7 @@ For the Python D&D 5E Project:
  - rage state (for barbarian)
  - inspiration state (created through Bard)
  - spells that cause states, like faerie fire (class method?)
+ - Use composition for Race and Classes, inheritance for the Subclasses and Subraces
 
 2. Monster class to define monsters from the monster manual (use Beholder for example)
  - combat state to define lair actions during initiative
