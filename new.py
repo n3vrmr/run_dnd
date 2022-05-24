@@ -27,13 +27,19 @@ class Character:
             self.random = True
         elif "n" in self.random:
             self.random = False
+        r = Race.choosing()
+        self.race = r
+        # self.r_asi = Race.ability_score_increase(self)
         advantage = False
         self.advantage = advantage
         disadvantage = False
         self.disadvantage = disadvantage
+        self.abilities()
+        r_asi = self.ability_score_increase()
+        self.r_asi = r_asi
         return
        
-    def abilities(self):
+    def abilities(self): # add the race ability score increase here
         """Allows the player to set their character's ability scores manually,
         then defines the respective ability modifiers according to those values.
         The way the ability modifiers are calculated is as described in the Player's Handbook:
@@ -205,14 +211,10 @@ class Character:
                 self.disadvantage == False
         return game_situation
         
-class Race(Character):
-    def __init__(self, ability_score_increase=True):
-        race = input("Choose your character's race: ").lower().strip()
-        self.race = race
-        
+    
     def ability_score_increase(self):
         if "Dwarf" in self.race:
-            self.ability_scores["Constitution"] = self.ability_scores["Constitution"] + 2
+            Dwarf.dwarf_asi()
         elif "Elf" in self.race:
             self.ability_scores["Dexterity"] = self.ability_scores["Dexterity"] + 2
         elif "Halfling" in self.race:
@@ -243,27 +245,81 @@ class Race(Character):
         elif "Goliath" in self.race:
             self.ability_scores["Strength"] = self.ability_scores["Strength"] + 2
             self.ability_scores["Constitution"] = self.ability_scores["Constitution"] + 1
+        return self.ability_scores
+    
+class Race:
+    def __init__(self, ability_score_increase=True):
+        self.race = self.choosing()
+        return self.race
+    
+    def choosing():
+        race = input("Choose your character's race: ").lower().strip()
+        return race
+        
+    # def ability_score_increase(self):
+    #     if "Dwarf" in self.race:
+    #         Dwarf.dwarf_asi()
+    #     elif "Elf" in self.race:
+    #         self.ability_scores["Dexterity"] = self.ability_scores["Dexterity"] + 2
+    #     elif "Halfling" in self.race:
+    #         self.ability_scores["Dexterity"] = self.ability_scores["Dexterity"] + 2
+    #     elif "Human" in self.race:
+    #         self.ability_scores["Strength"] = self.ability_scores["Strength"] + 1
+    #         self.ability_scores["Dexterity"] = self.ability_scores["Dexterity"] + 1
+    #         self.ability_scores["Constitution"] = self.ability_scores["Constitution"] + 1
+    #         self.ability_scores["Intelligence"] = self.ability_scores["Intelligence"] + 1
+    #         self.ability_scores["Wisdom"] = self.ability_scores["Wisdom"] + 1
+    #         self.ability_scores["Charisma"] = self.ability_scores["Charisma"] + 1
+    #     elif "Dragonborn" in self.race:
+    #         self.ability_scores["Strength"] = self.ability_scores["Strength"] + 2
+    #         self.ability_scores["Charisma"] = self.ability_scores["Charisma"] + 1
+    #     elif "Gnome" in self.race:
+    #         self.ability_scores["Intelligence"] = self.ability_scores["Intelligence"] + 2
+    #     elif "Half elf" in self.race or "Half-elf" in self.race:
+    #         self.ability_scores["Charisma"] = self.ability_scores["Charisma"] + 2
+    #         self.increase_two_scores()
+    #     elif "Half orc" in self.race or "Half-orc" in self.race:
+    #         self.ability_scores["Strength"] = self.ability_scores["Strength"] + 2
+    #         self.ability_scores["Constitution"] = self.ability_scores["Constitution"] + 1
+    #     elif "Tiefling" in self.race:
+    #         self.ability_scores["Intelligence"] = self.ability_scores["Intelligence"] + 1
+    #         self.ability_scores["Charisma"] = self.ability_scores["Charisma"] + 2
+    #     elif "Aasimar" in self.race:
+    #         self.ability_scores["Charisma"] = self.ability_scores["Charisma"] + 2
+    #     elif "Goliath" in self.race:
+    #         self.ability_scores["Strength"] = self.ability_scores["Strength"] + 2
+    #         self.ability_scores["Constitution"] = self.ability_scores["Constitution"] + 1
+    #     return
             
-# class Dwarf(Race):
-#     def __init__(self, )
+class Dwarf:
+    def __init__(self, speed=25, darkvision=True, dwarven_resilience=True,
+                 dwarven_combat_training=True, languages = ["Common", "Dwarvish"]):
+        self.speed = speed
+        self.darkvision = darkvision
+        self.dwarven_resilience = dwarven_resilience
+        self.dwarven_combat_training = dwarven_combat_training
+        self.languages = languages
+        return
+    
+    def dwarf_asi(self):
+        self.ability_scores["Constitution"] = self.ability_scores["Constitution"] + 2
 
 
 c1 = Character("name", 0)
-c1.abilities()
+
 c1.advantage = True
 c1.adv_dis()
-c1.increase_one_score()
-r1 = Race()
-r1.ability_score_increase()
+# c1.increase_one_score()
+
     
 c2 = Character("name", 0)
-c2.abilities()
+
 c2.disadvantage = True
 c2.adv_dis()
-c2.increase_two_scores()
+# c2.increase_two_scores()
 
-# if r1.ability_scores.get("Intelligence") < 10:
-#     print(f"{r1._name} is not very smart...")
+if c2.ability_scores.get("Intelligence") < 10:
+    print(f"{c2._name} is not very smart...")
     
 print("Proficiency bonus:",c1.proficiency())
 print(c1._name,"is ready to rock")
