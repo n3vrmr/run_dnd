@@ -216,7 +216,7 @@ class Character:
         if "Dwarf" in self.race:
             Dwarf.dwarf_asi()
         elif "Elf" in self.race:
-            self.ability_scores["Dexterity"] = self.ability_scores["Dexterity"] + 2
+            self.ability_scores["Dexterity"] = self.ability_scores.get("Dexterity") + 2
         elif "Halfling" in self.race:
             self.ability_scores["Dexterity"] = self.ability_scores["Dexterity"] + 2
         elif "Human" in self.race:
@@ -302,7 +302,7 @@ class Dwarf:
         return
     
     def dwarf_asi(self):
-        self.ability_scores["Constitution"] = self.ability_scores["Constitution"] + 2
+        self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 2
 
 
 c1 = Character("name", 0)
