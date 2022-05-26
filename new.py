@@ -55,7 +55,6 @@ class Character:
                 self.ability_scores["Intelligence"] = d6_roller.ability_rolls()
                 self.ability_scores["Wisdom"] = d6_roller.ability_rolls()
                 self.ability_scores["Charisma"] = d6_roller.ability_rolls()
-            # self.ability_modifiers()
             t.sleep(1.5)
         
         else:
@@ -71,7 +70,6 @@ class Character:
                 self.ability_scores["Intelligence"] = int(input("Intelligence: "))
                 self.ability_scores["Wisdom"] = int(input("Wisdom: "))
                 self.ability_scores["Charisma"] = int(input("Charisma: "))
-            # self.ability_modifiers()
         return self.ability_scores
     
     def ability_modifiers(self):
