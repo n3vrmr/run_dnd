@@ -18,6 +18,7 @@ For the Python D&D 5E Project:
 
 3. Weapons class, Armor class
  - Use Association to create Weapons class, Armor class (maybe Spellcasting?)
+ - don't forget damage types (nonmagical and magical)
  - divide weapons into their separate types, define if proficiency with them is true or not
  - divide armor into their separate types (light, medium, heavy)
 
@@ -25,13 +26,17 @@ For the Python D&D 5E Project:
  - think about multiclassing (probably not doing this)
 
 5. Inventory
- - Use Aggregation to create Inventory class
+ - Use composition to create Inventory class
+ - equip weapons, armor and items through Inventory
  
 6. Issues:
- - how to add to the values of the ability scores
- - figure out why the ability scores cannot be accessed through Race instance
- - figure out why the random attribute is not accessible through Race
- - link the two fucking classes you absolute moron oh my god
+ - how to use weapons according to the ability modifiers of a Character object
+ - condense to a single file? no
+ - create a Character first, save informations in database
+ - have a database with Monster class composed of monsters
+ - have different file for combat, add selected Character and Monster objects to initiative order
+ - how to make attacks that have to roll to hit, and how many hit points are subtracted
+ - resistances and status conditions (saving throws come into play here?)
 
 From python.org:
 "Classes provide a means of bundling data and functionality together. 

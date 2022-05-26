@@ -6,7 +6,7 @@ Created on Wed May 25 21:39:05 2022
 """
 
 import dice as d
-from new import Character,Race,Dwarf
+from new import Character
 from weapons import Battleaxe
 from monster import beholder
 
@@ -16,3 +16,11 @@ class Combat:
         
     def initiative(instance):
         print("")
+    
+    def attacking(self, weapon):
+        self.weapon = weapon
+        
+        
+c = Character("name", 0)
+
+w = Combat.attacking(Battleaxe()) # returns TypeError: attacking() missing 1 required positional argument: 'weapon'
