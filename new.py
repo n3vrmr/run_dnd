@@ -131,7 +131,7 @@ class Character:
         if "intelligence" in choice:
             self.ability_scores["Intelligence"] = self.ability_scores.get("Intelligence") + 1
         if "wisdom" in choice:
-            self.ability_scores["Wisdom"] = self.ability_scores.get("Intelligence") + 1
+            self.ability_scores["Wisdom"] = self.ability_scores.get("Wisdom") + 1
         if "charisma" in choice:
             self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 1
         print("Ability scores:",self.ability_scores)
@@ -195,7 +195,9 @@ class Character:
     
     def r_asi(self):
         if "dwarf" in self.race:
-            self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 2
+            r = Dwarf
+            self.r = r
+            Dwarf.dwarf_asi(self)
         elif "elf" in self.race:
             self.ability_scores["Dexterity"] = self.ability_scores.get("Dexterity") + 2
         elif "halfling" in self.race:
@@ -253,15 +255,39 @@ class Race:
         
             
 class Dwarf:
-    def __init__(self, speed=25, darkvision=True, dwarven_resilience=True,
-                 dwarven_combat_training=True, languages = ["Common", "Dwarvish"]):
-        self.speed = speed
-        self.darkvision = darkvision
-        self.dwarven_resilience = dwarven_resilience
-        self.dwarven_combat_training = dwarven_combat_training
-        self.languages = languages
+    def __init__(self):
+        self.speed = self.speed()
+        self.darkvision = self.darkvision()
+        self.dwarven_resilience = self.dwarven_resilience()
+        self.dwarven_combat_training = self.dwarven_combat_training()
+        self.languages = self.languages()
         return
-
+    
+    def speed(self):
+        self.speed = 25
+        return self.speed
+    
+    def darkvision(self):
+        self.darkvision = True
+        self.dv_distance = 60
+        text = f"{self._name} can see in dim light within {self.dv_distance} feet of them as if it were bright light, and in darkness as if it were dim light."
+        return text
+    
+    def dwarven_resilience(self):
+        self.dwarven_resilience = True
+        return self.dwarven_resilience()
+    
+    def dwarven_combat_training(self):
+        self.dwarven_combat_training = True
+        
+    def languages(self):
+        languages = ["Common", "Dwarvish"]
+        self.languages = languages
+        return self.languages
+    
+    def dwarf_asi(self):
+        if "dwarf" in self.race:
+            self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 2
 
 c1 = Character("name", 0)
 
