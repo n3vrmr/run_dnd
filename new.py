@@ -279,6 +279,7 @@ class Dwarf:
     
     def dwarven_combat_training(self):
         self.dwarven_combat_training = True
+        return self.dwarven_combat_training
         
     def languages(self):
         languages = ["Common", "Dwarvish"]
