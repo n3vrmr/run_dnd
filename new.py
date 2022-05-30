@@ -21,6 +21,14 @@ class Character:
         self._name = name
         level = int(input("Character level: "))
         self.level = level
+        languages = []
+        self.languages = languages
+        size = "Medium"
+        self.size = size
+        speed = 30
+        self.speed = speed
+        darkvision = False
+        self.darkvision = darkvision
         random = input("Generate random? Reply Y for yes or N for no. ").strip().lower()
         self.random = random
         if "y" in self.random:
@@ -28,13 +36,19 @@ class Character:
         elif "n" in self.random:
             self.random = False
         r = Race.choosing()
-        self.race = r
+        self.race = r    
+        sr = Race.choosing_subrace()
+        self.subrace = sr
         advantage = False
         self.advantage = advantage
         disadvantage = False
         self.disadvantage = disadvantage
         self.abilities()
-        self.r_asi()
+        if "human" in self.race:
+            self.r_asi()
+        else:
+            self.r_asi()
+            self.sr_asi()
         return
        
     def abilities(self):
@@ -96,17 +110,17 @@ class Character:
             DESCRIPTION.
         """
         choice = input("Choose an ability score to increase by 2: ").strip().lower()
-        if "strength" in choice:
+        if "str" in choice:
             self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 2
-        elif "dexterity" in choice:
+        elif "dex" in choice:
             self.ability_scores["Dexterity"] = self.ability_scores.get("Dexterity") + 2
-        elif "constitution" in choice:
+        elif "con" in choice:
             self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 2
-        elif "intelligence" in choice:
+        elif "int" in choice:
             self.ability_scores["Intelligence"] = self.ability_scores.get("Intelligence") + 2
-        elif "wisdom" in choice:
+        elif "wis" in choice:
             self.ability_scores["Wisdom"] = self.ability_scores.get("Wisdom") + 2
-        elif "charisma" in choice:
+        elif "cha" in choice:
             self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 2
         print("Ability scores:",self.ability_scores)
         self.ability_modifiers()
@@ -122,17 +136,17 @@ class Character:
             DESCRIPTION.
         """
         choice = input("Choose two ability scores to increase by 1: ").strip().lower()
-        if "strength" in choice:
+        if "str" in choice:
             self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 1
-        if "dexterity" in choice:
+        if "dex" in choice:
             self.ability_scores["Dexterity"] = self.ability_scores.get("Dexterity") + 1
-        if "constitution" in choice:
+        if "con" in choice:
             self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 1
-        if "intelligence" in choice:
+        if "int" in choice:
             self.ability_scores["Intelligence"] = self.ability_scores.get("Intelligence") + 1
-        if "wisdom" in choice:
+        if "wis" in choice:
             self.ability_scores["Wisdom"] = self.ability_scores.get("Wisdom") + 1
-        if "charisma" in choice:
+        if "cha" in choice:
             self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 1
         print("Ability scores:",self.ability_scores)
         self.ability_modifiers()
@@ -187,19 +201,25 @@ class Character:
             print("Rolling with disadvantage:",game_situation)
             if 1 in rolls:
                 print("\033[1;31;47mUh-oh, natural one! Critical fail!\033[0m")
-            elif self.advantage == True and self.disadvantage == True:
-                self.advantage == False
-                self.disadvantage == False
+        elif self.advantage == True and self.disadvantage == True:
+            self.advantage == False
+            self.disadvantage == False
         return game_situation
         
-    
     def r_asi(self):
         if "dwarf" in self.race:
             r = Dwarf
             self.r = r
             Dwarf.dwarf_asi(self)
+            Dwarf.languages(self)
+            Dwarf.darkvision(self)
+            Dwarf.speed(self)
         elif "elf" in self.race:
-            self.ability_scores["Dexterity"] = self.ability_scores.get("Dexterity") + 2
+            r = Elf
+            self.r = r
+            Elf.elf_asi(self)
+            Elf.languages(self)
+            Elf.darkvision(self)
         elif "halfling" in self.race:
             self.ability_scores["Dexterity"] = self.ability_scores.get("Dexterity") + 2
         elif "human" in self.race:
@@ -228,13 +248,44 @@ class Character:
         elif "goliath" in self.race:
             self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 2
             self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 1
+        if "human" in self.race:
+            print("Ability scores:",self.ability_scores)
+            self.ability_modifiers()
+            return self.ability_scores
+        else:
+            return self.ability_scores
+    
+    def sr_asi(self):
+        if "hill dwarf" in self.subrace:
+            sr = HillDwarf
+            self.sr = sr
+            HillDwarf.hdwarf_asi(self)
+        elif "mountain dwarf" in self.subrace:
+            sr = MountainDwarf
+            self.sr = sr
+            MountainDwarf.mdwarf_asi(self)
+        elif "high elf" in self.subrace:
+            sr = HighElf
+            self.sr = sr
+            HighElf.helf_asi(self)
+            HighElf.extra_language(self)
+        elif "wood elf" in self.subrace:
+            sr = WoodElf
+            self.sr = sr
+            WoodElf.welf_asi(self)
+            WoodElf.fleet_of_foot(self)
+        elif "drow" in self.subrace:
+            sr = Drow
+            self.sr = sr
+            Drow.drow_asi(self)
+            Drow.superior_darkvision(self)
         print("Ability scores:",self.ability_scores)
         self.ability_modifiers()
         return self.ability_scores
     
     def unarmed_attack(self):
         to_hit = d.roll(1, 20) + self._ability_mods.get("Strength")
-        if to_hit >= 1:
+        if to_hit >= 0:
             hit = True
         else:
             hit = False
@@ -247,55 +298,201 @@ class Character:
 class Race:
     def __init__(self, r_asi=True):
         self.race = self.choosing()
+        self.subrace = self.choosing_subrace()
         return self.race
     
     def choosing():
         race = input("Choose your character's race: ").lower().strip()
         return race
         
+    def choosing_subrace():
+        subrace = input("Choose your character's subrace: ").lower().strip()
+        return subrace
             
 class Dwarf:
-    def __init__(self):
-        self.speed = self.speed()
-        self.darkvision = self.darkvision()
-        self.dwarven_resilience = self.dwarven_resilience()
+    def __init__(self, dwarven_resilience = True):
+        self.speed = 25
+        self.size = "Medium"
+        self.darkvision = [True,60]
+        self.dwarven_resilience = dwarven_resilience
         self.dwarven_combat_training = self.dwarven_combat_training()
-        self.languages = self.languages()
+        self.languages = []
         return
     
     def speed(self):
         self.speed = 25
         return self.speed
     
+    def size():
+        size = "Medium"
+        return size
+    
     def darkvision(self):
-        self.darkvision = True
-        self.dv_distance = 60
-        text = f"{self._name} can see in dim light within {self.dv_distance} feet of them as if it were bright light, and in darkness as if it were dim light."
-        return text
+        self.darkvision = [True,60]
+        return self.darkvision
     
-    def dwarven_resilience(self):
-        self.dwarven_resilience = True
-        return self.dwarven_resilience()
+    def dwarven_resilience():
+        dwarven_resilience = True
+        return dwarven_resilience
     
-    def dwarven_combat_training(self):
-        self.dwarven_combat_training = True
-        return self.dwarven_combat_training
+    def dwarven_combat_training():
+        dwarven_combat_training = True
+        return dwarven_combat_training
         
     def languages(self):
-        languages = ["Common", "Dwarvish"]
+        languages = ["Common","Dwarvish"]
         self.languages = languages
         return self.languages
     
     def dwarf_asi(self):
         if "dwarf" in self.race:
             self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 2
-
+        return self.ability_scores
+    
+class HillDwarf(Dwarf):
+    def __init__(self):
+        self.dwarven_toughness = self.dwarven_toughness()
+        return
+    
+    def dwarven_toughness():
+        dwarven_toughness = True
+        return dwarven_toughness
+    
+    def hdwarf_asi(self):
+        if "hill dwarf" in self.subrace:
+            self.ability_scores["Wisdom"] = self.ability_scores.get("Wisdom") + 1
+        return self.ability_scores
+            
+class MountainDwarf(Dwarf):
+    def __init__(self):
+        self.dwarven_armor_training = self.dwarven_armor_training()
+        return
+    
+    def dwarven_armor_training():
+        dwarven_armor_training = True
+        return dwarven_armor_training
+    
+    def mdwarf_asi(self):
+        if "mountain dwarf" in self.subrace:
+            self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 2
+        return self.ability_scores
+        
+class Elf:
+    def __init__(self):
+        self.speed = 30
+        self.size = "Medium"
+        self.darkvision = [True,60]
+        self.keen_senses = True
+        self.fey_ancestry = True
+        self.trance = True
+        self.languages = []
+        return
+    
+    def speed(self):
+        self.speed = 30
+        return self.speed
+    
+    def size(self):
+        self.size = "Medium"
+        return self.size
+    
+    def darkvision(self):
+        self.darkvision = [True,60]
+        return self.darkvision
+    
+    def keen_senses(self):
+        self.keen_senses = True
+        return self.keen_senses
+    
+    def fey_ancestry(self):
+        self.fey_ancestry = True
+        return self.fey_ancestry
+    
+    def trance(self):
+        self.trance = True
+        return self.trance
+    
+    def languages(self):
+        languages = ["Common","Elvish"]
+        self.languages = languages
+        return self.languages
+    
+    def elf_asi(self):
+        if "elf" in self.race:
+            self.ability_scores["Dexterity"] = self.ability_scores.get("Dexterity") + 2
+        return self.ability_scores
+            
+class HighElf(Elf):
+    def __init__(self):
+        self.elf_weapon_training = True
+        self.cantrip = True
+        self.languages = self.languages
+        return
+    
+    def elf_weapon_training(self):
+        self.elf_weapon_training = True
+        return self.elf_weapon_training
+    
+    def cantrip(self):
+        self.cantrip = True
+        return self.cantrip
+    
+    def extra_language(self):
+        extra_language = input("Choose another language: ")
+        self.languages.append(extra_language)
+        text = f"{self._name} can speak the following languages: {self.languages}"
+        print(text)
+        return self.languages
+    
+    def helf_asi(self):
+        if "high elf" in self.subrace:
+            self.ability_scores["Intelligence"] = self.ability_scores.get("Intelligence") + 1
+        return self.ability_scores
+    
+class WoodElf(Elf):
+    def __init__(self):
+        self.elf_weapon_training = True
+        self.fleet_of_foot()
+        self.mask_of_the_wild = True
+        return
+    
+    def elf_weapon_training(self):
+        self.elf_weapon_training = True
+        return self.elf_weapon_training
+    
+    def fleet_of_foot(self):
+        self.speed = self.speed + 5
+        return self.speed
+    
+    def welf_asi(self):
+        if "wood elf" in self.subrace:
+            self.ability_scores["Wisdom"] = self.ability_scores.get("Wisdom") + 1
+        return self.ability_scores
+    
+class Drow(Elf):
+    def __init__(self):
+        self.darkvision = self.superior_darkvision()
+        self.sunlight_sensitivity = True
+        self.drow_magic = True
+        self.drow_weapon_training = True
+        return
+    
+    def superior_darkvision(self):
+        self.darkvision = [True,120]
+        return self.darkvision
+    
+    def drow_asi(self):
+        if "drow" in self.subrace:
+            self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 1
+        return self.ability_scores
+    
 c1 = Character("name", 0)
 
 c1.advantage = True
 c1.adv_dis()
 c1.increase_one_score()
 c1.unarmed_attack()
+
     
 c2 = Character("name", 0)
 

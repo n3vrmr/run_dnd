@@ -30,6 +30,7 @@ For the Python D&D 5E Project:
  - equip weapons, armor and items through Inventory
  
 6. Issues:
+ - call functions from Race to set Character attributes inside race_attributes()
  - increase_two_scores() not working for half elf AHHHHHHHH
  - how to query advantage/disadvantage for every roll instead of having to change a variable
  - how to use weapons according to the ability modifiers of a Character object
