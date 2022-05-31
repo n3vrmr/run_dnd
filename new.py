@@ -9,6 +9,96 @@ import dice as d
 import time as t
 import d6_roller
 
+class Campaign:
+    def __init__(self):
+        self.add_players()
+        self.set_dm()
+        return
+    
+    def add_players(self):
+        players = []
+        self.players = players
+        print("Add a player to your campaign:")
+        t.sleep(1.5)
+        add = True
+        while add:
+            name = input("Enter the player name: ")
+            self.name = name
+            add = False
+            player = Player(f"{self.name}")
+            self.players.append(player)
+            cont = input("Add another player? ").lower().strip()
+            if "y" in cont:
+                add = True
+            else:
+                add = False
+        for i in range(0,len(self.players)):
+            print(f"{self.players[i].name} has joined the campaign!")
+        return self.players
+    
+    def set_dm(self):
+        select_player = input("Who will be the Dungeon Master for this Campaign? ")
+        for self.player in self.players:
+            if select_player == self.player:
+                self.player = DungeonMaster
+                print(f"{select_player} will be the DM.")
+            # else:
+            #     t.sleep(1.2)
+            #     print("Players, create your characters: ")
+            #     t.sleep(1.2)
+            #     Player.create_character(self)
+        return self.players
+    
+    def player_characters(self):
+        pass
+
+class DungeonMaster:
+    def __init__(self):
+        game_control = True
+        self.game_control = game_control
+        return
+    
+    def weather_set(self, condition):
+        pass
+    
+    def ambient_set(self):
+        pass
+    
+    def time_set(self):
+        pass
+    
+    def override_sunlight(self):
+        pass
+    
+    def visibility_set(self):
+        pass
+    
+    def create_npc(self):
+        pass
+    
+    def create_initiative(self):
+        pass
+    
+    def add_to_initiative(self):
+        pass
+    
+    def remove_from_initiative(self):
+        pass
+
+class Player:
+    def __init__(self, name):
+        self.name = name
+        game_control = False
+        self.game_control = game_control
+        character = self.create_character()
+        self.character = character
+        return
+    
+    def create_character(self):
+        character = Character("name", 0)
+        self.character = character
+        return self.character
+        
 class Character:
     """Create a character in the Dungeons & Dragons 5th Edition format.
     """
@@ -27,8 +117,6 @@ class Character:
         self.size = size
         speed = 30
         self.speed = speed
-        darkvision = False
-        self.darkvision = darkvision
         random = input("Generate random? Reply Y for yes or N for no. ").strip().lower()
         self.random = random
         if "y" in self.random:
@@ -36,9 +124,10 @@ class Character:
         elif "n" in self.random:
             self.random = False
         r = Race.choosing()
-        self.race = r    
-        sr = Race.choosing_subrace()
-        self.subrace = sr
+        self.race = r
+        if "human" not in self.race:
+            sr = Race.choosing_subrace()
+            self.subrace = sr
         advantage = False
         self.advantage = advantage
         disadvantage = False
@@ -49,6 +138,9 @@ class Character:
         else:
             self.r_asi()
             self.sr_asi()
+        self.race_attributes()
+        if "human" not in self.race:
+            self.subrace_attributes()
         return
        
     def abilities(self):
@@ -211,31 +303,30 @@ class Character:
             r = Dwarf
             self.r = r
             Dwarf.dwarf_asi(self)
-            Dwarf.languages(self)
-            Dwarf.darkvision(self)
-            Dwarf.speed(self)
         elif "elf" in self.race:
             r = Elf
             self.r = r
             Elf.elf_asi(self)
-            Elf.languages(self)
-            Elf.darkvision(self)
         elif "halfling" in self.race:
-            self.ability_scores["Dexterity"] = self.ability_scores.get("Dexterity") + 2
+            r = Halfling
+            self.r = r
+            Halfling.halfling_asi(self)
         elif "human" in self.race:
-            self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 1
-            self.ability_scores["Dexterity"] = self.ability_scores.get("Dexterity") + 1
-            self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 1
-            self.ability_scores["Intelligence"] = self.ability_scores.get("Intelligence") + 1
-            self.ability_scores["Wisdom"] = self.ability_scores.get("Wisdom") + 1
-            self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 1
+            r = Human
+            self.r = r
+            Human.human_asi(self)
         elif "dragonborn" in self.race:
-            self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 2
-            self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 1
+            r = Dragonborn
+            self.r = r
+            Dragonborn.dragonborn_asi(self)
         elif "gnome" in self.race:
-            self.ability_scores["Intelligence"] = self.ability_scores.get("Intelligence") + 2
-        elif "halfelf" in self.race or "half-elf" in self.race:
-            self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 2
+            r = Gnome
+            self.r = r
+            Gnome.gnome_asi(self)
+        elif "half elf" in self.race:
+            r = HalfElf
+            self.r = r
+            HalfElf.half_elf_asi(self)
             self.increase_two_scores()
         elif "halforc" in self.race or "half-orc" in self.race:
             self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 2
@@ -268,20 +359,51 @@ class Character:
             sr = HighElf
             self.sr = sr
             HighElf.helf_asi(self)
-            HighElf.extra_language(self)
         elif "wood elf" in self.subrace:
             sr = WoodElf
             self.sr = sr
             WoodElf.welf_asi(self)
-            WoodElf.fleet_of_foot(self)
         elif "drow" in self.subrace:
             sr = Drow
             self.sr = sr
             Drow.drow_asi(self)
-            Drow.superior_darkvision(self)
         print("Ability scores:",self.ability_scores)
         self.ability_modifiers()
         return self.ability_scores
+    
+    def race_attributes(self):
+        if "dwarf" in self.race:
+            Dwarf.languages(self)
+            Dwarf.darkvision(self)
+            Dwarf.speed(self)
+            Dwarf.dwarven_combat_training(self)
+            Dwarf.dwarven_resilience(self)
+        elif "elf" in self.race:
+            Elf.languages(self)
+            Elf.darkvision(self)
+            Elf.keen_senses(self)
+            Elf.fey_ancestry(self)
+            Elf.trance(self)
+    
+    def subrace_attributes(self):
+        if "hill dwarf" in self.subrace:
+            HillDwarf.dwarven_toughness(self)
+        elif "mountain dwarf" in self.subrace:
+            MountainDwarf.dwarven_armor_training(self)
+        elif "high elf" in self.subrace:
+            HighElf.extra_language(self)
+            HighElf.elf_weapon_training(self)
+            HighElf.cantrip(self)
+        elif "wood elf" in self.subrace:
+            WoodElf.fleet_of_foot(self)
+            WoodElf.elf_weapon_training(self)
+            WoodElf.mask_of_the_wild(self)
+            WoodElf.speed(self)
+        elif "drow" in self.subrace:
+            Drow.superior_darkvision(self)
+            Drow.sunlight_sensitivity(self)
+            Drow.drow_weapon_training(self)
+            Drow.drow_magic(self)
     
     def unarmed_attack(self):
         to_hit = d.roll(1, 20) + self._ability_mods.get("Strength")
@@ -310,34 +432,34 @@ class Race:
         return subrace
             
 class Dwarf:
-    def __init__(self, dwarven_resilience = True):
-        self.speed = 25
-        self.size = "Medium"
-        self.darkvision = [True,60]
-        self.dwarven_resilience = dwarven_resilience
-        self.dwarven_combat_training = self.dwarven_combat_training()
+    def __init__(self):
         self.languages = []
         return
     
     def speed(self):
-        self.speed = 25
+        speed = 25
+        self.speed = speed
         return self.speed
     
-    def size():
+    def size(self):
         size = "Medium"
-        return size
+        self.size = size
+        return self.size
     
     def darkvision(self):
-        self.darkvision = [True,60]
+        darkvision = [True,60]
+        self.darkvision = darkvision
         return self.darkvision
     
-    def dwarven_resilience():
+    def dwarven_resilience(self):
         dwarven_resilience = True
-        return dwarven_resilience
+        self.dwarven_resilience = dwarven_resilience
+        return self.dwarven_resilience
     
-    def dwarven_combat_training():
+    def dwarven_combat_training(self):
         dwarven_combat_training = True
-        return dwarven_combat_training
+        self.dwarven_combat_training = dwarven_combat_training
+        return self.dwarven_combat_training
         
     def languages(self):
         languages = ["Common","Dwarvish"]
@@ -350,13 +472,10 @@ class Dwarf:
         return self.ability_scores
     
 class HillDwarf(Dwarf):
-    def __init__(self):
-        self.dwarven_toughness = self.dwarven_toughness()
-        return
-    
-    def dwarven_toughness():
+    def dwarven_toughness(self):
         dwarven_toughness = True
-        return dwarven_toughness
+        self.dwarven_toughness = dwarven_toughness
+        return self.dwarven_toughness
     
     def hdwarf_asi(self):
         if "hill dwarf" in self.subrace:
@@ -364,13 +483,10 @@ class HillDwarf(Dwarf):
         return self.ability_scores
             
 class MountainDwarf(Dwarf):
-    def __init__(self):
-        self.dwarven_armor_training = self.dwarven_armor_training()
-        return
-    
-    def dwarven_armor_training():
+    def dwarven_armor_training(self):
         dwarven_armor_training = True
-        return dwarven_armor_training
+        self.dwarven_armor_training = dwarven_armor_training
+        return self.dwarven_armor_training
     
     def mdwarf_asi(self):
         if "mountain dwarf" in self.subrace:
@@ -379,37 +495,37 @@ class MountainDwarf(Dwarf):
         
 class Elf:
     def __init__(self):
-        self.speed = 30
-        self.size = "Medium"
-        self.darkvision = [True,60]
-        self.keen_senses = True
-        self.fey_ancestry = True
-        self.trance = True
         self.languages = []
         return
     
     def speed(self):
-        self.speed = 30
+        speed = 30
+        self.speed = speed
         return self.speed
     
     def size(self):
-        self.size = "Medium"
+        size = "Medium"
+        self.size = size
         return self.size
     
     def darkvision(self):
-        self.darkvision = [True,60]
+        darkvision = [True,60]
+        self.darkvision = darkvision
         return self.darkvision
     
     def keen_senses(self):
-        self.keen_senses = True
+        keen_senses = True
+        self.keen_senses = keen_senses
         return self.keen_senses
     
     def fey_ancestry(self):
-        self.fey_ancestry = True
+        fey_ancestry = True
+        self.fey_ancestry = fey_ancestry
         return self.fey_ancestry
     
     def trance(self):
-        self.trance = True
+        trance = True
+        self.trance = trance
         return self.trance
     
     def languages(self):
@@ -422,19 +538,15 @@ class Elf:
             self.ability_scores["Dexterity"] = self.ability_scores.get("Dexterity") + 2
         return self.ability_scores
             
-class HighElf(Elf):
-    def __init__(self):
-        self.elf_weapon_training = True
-        self.cantrip = True
-        self.languages = self.languages
-        return
-    
+class HighElf(Elf):    
     def elf_weapon_training(self):
-        self.elf_weapon_training = True
+        elf_weapon_training = True
+        self.elf_weapon_training = elf_weapon_training
         return self.elf_weapon_training
     
     def cantrip(self):
-        self.cantrip = True
+        cantrip = True
+        self.cantrip = cantrip
         return self.cantrip
     
     def extra_language(self):
@@ -457,12 +569,19 @@ class WoodElf(Elf):
         return
     
     def elf_weapon_training(self):
-        self.elf_weapon_training = True
+        elf_weapon_training = True
+        self.elf_weapon_training = elf_weapon_training
         return self.elf_weapon_training
     
     def fleet_of_foot(self):
-        self.speed = self.speed + 5
+        speed = 35
+        self.speed = speed
         return self.speed
+    
+    def mask_of_the_wild(self):
+        mask_of_the_wild = True
+        self.mask_of_the_wild = mask_of_the_wild
+        return self.mask_of_the_wild
     
     def welf_asi(self):
         if "wood elf" in self.subrace:
@@ -478,35 +597,87 @@ class Drow(Elf):
         return
     
     def superior_darkvision(self):
-        self.darkvision = [True,120]
+        darkvision = [True,120]
+        self.darkvision = darkvision
         return self.darkvision
+    
+    def sunlight_sensitivity(self):
+        sunlight_sensitivity = True
+        self.sunlight_sensitivity = sunlight_sensitivity
+        return self.sunlight_sensitivity
+    
+    def drow_magic(self):
+        drow_magic = True
+        self.drow_magic = drow_magic
+        return self.drow_magic
+    
+    def drow_weapon_training(self):
+        drow_weapon_training = True
+        self.drow_weapon_training = drow_weapon_training
+        return self.drow_weapon_training
     
     def drow_asi(self):
         if "drow" in self.subrace:
             self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 1
         return self.ability_scores
+
+class Halfling:
+    def __init__(self):
+        self.languages = []
+        return
     
-c1 = Character("name", 0)
-
-c1.advantage = True
-c1.adv_dis()
-c1.increase_one_score()
-c1.unarmed_attack()
-
+    def halfling_asi(self):
+        if "halfling" in self.race:
+            self.ability_scores["Dexterity"] = self.ability_scores.get("Dexterity") + 2
+        return self.ability_scores
     
-c2 = Character("name", 0)
-
-c2.disadvantage = True
-c2.adv_dis()
-c2.increase_two_scores()
-c2.unarmed_attack()
-
-
-if c2.ability_scores.get("Intelligence") < 10:
-    print(f"{c2._name} is not very smart...")
+class Human:
+    def __init__(self):
+        self.languages = []
+        return
+        
+    def human_asi(self):
+        if "human" in self.race:
+            self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 1
+            self.ability_scores["Dexterity"] = self.ability_scores.get("Dexterity") + 1
+            self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 1
+            self.ability_scores["Intelligence"] = self.ability_scores.get("Intelligence") + 1
+            self.ability_scores["Wisdom"] = self.ability_scores.get("Wisdom") + 1
+            self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 1
+        return self.ability_scores
+        
+class Dragonborn:
+    def __init__(self):
+        self.languages = []
+        return
     
-print("Proficiency bonus:",c1.proficiency())
-print(c1._name,"is ready to rock")
+    def dragonborn_asi(self):
+        if "dragonborn" in self.race:
+            self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 2
+            self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 1
+        return self.ability_scores
+
+class Gnome:
+    def __init__(self):
+        self.languages = []
+        return
+
+    def gnome_asi(self):
+        if "gnome" in self.race:
+            self.ability_scores["Intelligence"] = self.ability_scores.get("Intelligence") + 2
+        return self.ability_scores
+    
+class HalfElf:
+    def __init__(self):
+        self.languages = []
+        return
+    
+    def half_elf_asi(self):
+        if "half elf" in self.race:
+            self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 2
+        return self.ability_scores
+        
+c=Campaign()
 
 def main():
     print("Not affiliated with Wizards of the Coast LLC")
