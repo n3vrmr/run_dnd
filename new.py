@@ -11,22 +11,21 @@ import d6_roller
 
 class Campaign:
     def __init__(self):
-        dm = DungeonMaster
-        dm.set_dm(self)
+        dm = DungeonMaster()
+        self.dm = dm
         self.add_players()
         return
     
     def add_players(self):
         players = []
         self.players = players
-        print("Add a player to your campaign:")
+        print("Add a player to your campaign")
         t.sleep(1.5)
         add = True
         while add:
-            name = input("Enter the player name: ")
-            self.name = name
             add = False
-            player = Player(f"{self.name}")
+            name = input("Enter the player name: ")
+            player = Player(f"{name}")
             self.players.append(player)
             cont = input("Add another player? ").lower().strip()
             if "y" in cont:
@@ -50,7 +49,7 @@ class DungeonMaster:
     def __init__(self):
         game_control = True
         self.game_control = game_control
-        self.set_dm()
+        self.dm = self.set_dm()
         return
     
     def set_dm(self):
@@ -59,23 +58,71 @@ class DungeonMaster:
         print(f"{self.dm} will be the DM.")
         return self.dm
     
-    def weather_set(self, condition):
-        pass
+    def weather_set(self, weather):
+        self.weather = weather
+        text = f"It is {self.weather} at the moment."
+        print(text)
+        return self.weather
     
-    def ambient_set(self):
-        pass
+    def ambient_set(self, environment):
+        self.environment = environment
+        vowels = ["a", "e", "i", "o", "u"]
+        split = list(self.environment)
+        if split[0] in vowels:
+            text = f"You are at an {self.environment}."
+        else:
+            text = f"You are at a {self.environment}"
+        print(text)
+        closed_spaces = ["cave", "tavern"]
+        if self.environment in closed_spaces:
+            self.override_sunlight(False)
+        return self.environment
     
-    def time_set(self):
-        pass
+    def time_set(self, time):
+        self.time = time
+        text = f"The time of day is {self.time}"
+        print(text)
+        convert = int(self.time.replace(":", ""))
+        if convert >= 600 and convert <= 1800:
+            self.override_sunlight(True)
+        else:
+            self.override_sunlight(False)
+        return self.time
     
-    def override_sunlight(self):
-        pass
+    def check_sunlight(self):
+        if self.sunlight == True:
+            text = "The light of day is shining."
+        else:
+            text = "There is no daylight to be seen."
+        print(text)
+        return self.sunlight
+    
+    def override_sunlight(self, sunlight:bool):
+        self.sunlight = sunlight
+        self.check_sunlight()
+        return self.sunlight
     
     def visibility_set(self):
         pass
     
     def create_npc(self):
-        pass
+        npcs = []
+        self.npcs = npcs
+        print("Add an NPC to your campaign")
+        t.sleep(1.5)
+        add = True
+        while add:
+            add = False
+            name = input("Enter the NPC name: ")
+            self.name = name
+            npc = Character(f"{name}", 0)
+            self.npcs.append(npc)
+            cont = input("Add another NPC? ").lower().strip()
+            if "y" in cont:
+                add = True
+            else:
+                add = False
+        return self.npcs
     
     def create_initiative(self):
         pass
@@ -84,6 +131,9 @@ class DungeonMaster:
         pass
     
     def remove_from_initiative(self):
+        pass
+    
+    def end_initiative(self):
         pass
 
 class Player:
@@ -106,52 +156,46 @@ class Character:
     def __init__(self, name, level:int, random=False,
                  ability_scores={}, _ability_mods={},
                  proficiency_bonus=0):
-        """Sets the initial state for a new character.
-        """
-        name = input("Character name: ")
-        self._name = name
-        level = int(input("Character level: "))
-        self.level = level
-        languages = []
-        self.languages = languages
-        size = "Medium"
-        self.size = size
-        speed = 30
-        self.speed = speed
-        random = input("Generate random? Reply Y for yes or N for no. ").strip().lower()
-        self.random = random
+        self._name = input("Character name: ")
+        self.level = int(input("Character level: "))
+        self.languages = []
+        self.size = "Medium"
+        self.speed = 30
+        self.random = input("Generate random? Reply Y for yes or N for no. ").strip().lower()
         if "y" in self.random:
             self.random = True
         elif "n" in self.random:
             self.random = False
-        r = Race.choosing()
-        self.race = r
-        no_subrace = ["human", "half elf", "half orc",
-                      "tiefling", "aasimar", "goliath"]
-        if self.race not in no_subrace:
-            sr = Race.choosing_subrace()
-            self.subrace = sr
-        advantage = False
-        self.advantage = advantage
-        disadvantage = False
-        self.disadvantage = disadvantage
+        self.race = Race.choosing()
+        self.no_subrace = ["human", "half elf", "half orc",
+                      "tiefling", "goliath"]
+        if self.race not in self.no_subrace:
+            self.subrace = Race.choosing_subrace()
+        self.advantage = False
+        self.disadvantage = False
         self.abilities()
-        if self.race in no_subrace:
+        if self.race in self.no_subrace:
             self.r_asi()
         else:
             self.r_asi()
             self.sr_asi()
         self.race_attributes()
-        if self.race not in no_subrace:
+        if self.race not in self.no_subrace:
             self.subrace_attributes()
+        self.proficiency()
         return
        
     def abilities(self):
-        """Allows the player to set their character's ability scores manually,
-        then defines the respective ability modifiers according to those values.
-        The way the ability modifiers are calculated is as described in the Player's Handbook:
-        (ability score - 10), divided by 2 and rounded down.
-        In case you chose to generate a random character, the ability scores will be decided for you instead.
+        """
+        Allows the player to set their character's ability scores manually,
+        or randomly rolls for each ability score individually. After
+        determining each score, prints the dictionary.
+               
+        Returns
+        -------
+        ability_scores: A dictionary with the name of each ability score as a 
+        key, and integers as their correpsonding values.
+        
         """
         if self.random == True:
             self.ability_scores = {}
@@ -182,6 +226,19 @@ class Character:
         return self.ability_scores
     
     def ability_modifiers(self):
+        """
+        Calculates each ability score modifier based on the values of the
+        corresponding ability scores. The way this is is done is as described
+        in the Dungeons & Dragons 5th Edition Player's Handbook:
+            (ability score - 10), divided by two and rounded down.
+        After determining each of the modifiers, it prints the dictionary.
+
+        Returns
+        -------
+        ability_mods: A dictionary with the name of each ability score modifier
+        as a key, and integers as their correpsonding values.
+
+        """
         self._ability_mods = {}
         modifier = True
         while modifier:
@@ -199,10 +256,10 @@ class Character:
         """
         Method for increasing one of your ability scores by 2 points,
         based on player choice.
+        
         Returns
         -------
-        TYPE
-            DESCRIPTION.
+        Updated ability_scores and ability_mods dictionaries.
         """
         choice = input("Choose an ability score to increase by 2: ").strip().lower()
         if "str" in choice:
@@ -225,10 +282,10 @@ class Character:
         """
         Method for increasing two of your ability scores by 1 point,
         based on player choice.
+        
         Returns
         -------
-        TYPE
-            DESCRIPTION.
+        Updated ability_scores and ability_mods dictionaries.
         """
         choice = input("Choose two ability scores to increase by 1: ").strip().lower()
         if "str" in choice:
@@ -259,26 +316,23 @@ class Character:
         """
         if self.level <=4:
             pb = 2
-            return pb
         elif self.level >=5 and self.level <=8:
             pb = 3
-            return pb
         elif self.level >=9 and self.level <=12:
             pb = 4
-            return pb
         elif self.level >=13 and self.level <=16:
             pb = 5
-            return pb
         elif self.level >=17 and self.level <=20:
             pb = 6
         self.proficiency_bonus = pb
-        return pb
+        return self.proficiency_bonus
         
     def adv_dis(self):
         """
         Make a roll with either advantage or disadvantage.
         If you have both advantage and disadvantage, they cancel out.
         Advantage and disadvantage do not stack.
+        
         Returns
         -------
         game_situation : the highest roll for advantage and the lowest
@@ -302,47 +356,50 @@ class Character:
         return game_situation
         
     def r_asi(self):
+        """
+        Calculates the ability score increase based on the race chosen by the
+        player.
+
+        Returns
+        -------
+        Updated ability_scores and ability_mods dictionaries.
+
+        """
         if self.race == "dwarf":
-            r = Dwarf
-            self.r = r
+            self.r = Dwarf
             Dwarf.dwarf_asi(self)
         elif self.race == "elf":
-            r = Elf
-            self.r = r
+            self.r = Elf
             Elf.elf_asi(self)
         elif self.race == "halfling":
-            r = Halfling
-            self.r = r
+            self.r = Halfling
             Halfling.halfling_asi(self)
         elif self.race == "human":
-            r = Human
-            self.r = r
+            self.r = Human
             Human.human_asi(self)
         elif self.race == "dragonborn":
-            r = Dragonborn
-            self.r = r
+            self.r = Dragonborn
             Dragonborn.dragonborn_asi(self)
         elif self.race == "gnome":
-            r = Gnome
-            self.r = r
+            self.r = Gnome
             Gnome.gnome_asi(self)
         elif self.race == "half elf":
-            r = HalfElf
-            self.r = r
+            self.r = HalfElf
             HalfElf.half_elf_asi(self)
             self.increase_two_scores()
         elif self.race == "half orc":
-            self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 2
-            self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 1
+            self.r = HalfOrc
+            HalfOrc.half_orc_asi(self)
         elif self.race == "tiefling":
-            self.ability_scores["Intelligence"] = self.ability_scores.get("Intelligence") + 1
-            self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 2
+            self.r = Tiefling
+            Tiefling.tiefling_asi(self)
         elif self.race == "aasimar":
-            self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 2
+            self.r = Aasimar
+            Aasimar.aasimar_asi(self)
         elif self.race == "goliath":
-            self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 2
-            self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 1
-        if self.race == "human":
+            self.r = Goliath
+            Goliath.goliath_asi(self)
+        if self.race in self.no_subrace:
             print("Ability scores:",self.ability_scores)
             self.ability_modifiers()
             return self.ability_scores
@@ -350,31 +407,43 @@ class Character:
             return self.ability_scores
     
     def sr_asi(self):
+        """
+        Calculates the ability score increase based on the race chosen by the
+        player.
+
+        Returns
+        -------
+        Updated ability_scores and ability_mods dictionaries.
+
+        """
         if self.subrace == "hill dwarf":
-            sr = HillDwarf
-            self.sr = sr
+            self.sr = HillDwarf
             HillDwarf.hdwarf_asi(self)
         elif "mountain dwarf" in self.subrace:
-            sr = MountainDwarf
-            self.sr = sr
+            self.sr = MountainDwarf
             MountainDwarf.mdwarf_asi(self)
         elif "high elf" in self.subrace:
-            sr = HighElf
-            self.sr = sr
+            self.sr = HighElf
             HighElf.helf_asi(self)
         elif "wood elf" in self.subrace:
-            sr = WoodElf
-            self.sr = sr
+            self.sr = WoodElf
             WoodElf.welf_asi(self)
         elif "drow" in self.subrace:
-            sr = Drow
-            self.sr = sr
+            self.sr = Drow
             Drow.drow_asi(self)
         print("Ability scores:",self.ability_scores)
         self.ability_modifiers()
         return self.ability_scores
     
     def race_attributes(self):
+        """
+        Sets character attributes based on the race chosen by the player.
+
+        Returns
+        -------
+        None.
+
+        """
         if self.race == "dwarf":
             Dwarf.languages(self)
             Dwarf.darkvision(self)
@@ -389,6 +458,14 @@ class Character:
             Elf.trance(self)
     
     def subrace_attributes(self):
+        """
+        Sets character attributes based on the race chosen by the player.
+
+        Returns
+        -------
+        None.
+
+        """
         if self.subrace == "hill dwarf":
             HillDwarf.dwarven_toughness(self)
         elif self.subrace == "mountain dwarf":
@@ -678,6 +755,49 @@ class HalfElf:
     def half_elf_asi(self):
         if self.race == "half elf":
             self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 2
+        return self.ability_scores
+    
+class HalfOrc:
+    def __init__(self):
+        self.languages = []
+        return
+    
+    def half_orc_asi(self):
+        if self.race == "half orc":
+            self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 2
+            self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 1
+        return self.ability_scores
+    
+class Tiefling:
+    def __init__(self):
+        self.languages = []
+        return
+    
+    def tiefling_asi(self):
+        if self.race == "tiefling":
+            self.ability_scores["Intelligence"] = self.ability_scores.get("Intelligence") + 1
+            self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 2
+        return self.ability_scores
+    
+class Aasimar:
+    def __init__(self):
+        self.languages = []
+        return
+    
+    def aasimar_asi(self):
+        if self.race == "aasimar":
+            self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 2
+        return self.ability_scores
+
+class Goliath:
+    def __init__(self):
+        self.languages = []
+        return
+    
+    def goliath_asi(self):
+        if self.race == "goliath":
+            self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 2
+            self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 1
         return self.ability_scores
         
 c = Campaign()
