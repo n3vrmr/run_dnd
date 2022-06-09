@@ -38,6 +38,19 @@ For the Python D&D 5E Project:
  - have different file for combat, add selected Character and Monster objects to initiative order
  - how to make attacks that have to roll to hit, and how many hit points are subtracted
  - resistances and status conditions (saving throws come into play here?)
+ 
+7. Subclasses:
+ - berserker barbarian
+ - college of lore bard
+ - life domain cleric
+ - circle of the moon druid
+ - champion fighter
+ - way of the open hand monk
+ - oath of vengeance paladin
+ - assassin rogue
+ - wild magic sorcerer
+ - hexblade warlock
+ - school of evocation wizard
 
 From python.org:
 "Classes provide a means of bundling data and functionality together. 
