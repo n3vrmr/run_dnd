@@ -19,6 +19,7 @@ class Campaign:
     def add_players(self):
         players = []
         self.players = players
+        t.sleep(1.5)
         print("Add a player to your campaign")
         t.sleep(1.5)
         add = True
@@ -176,26 +177,26 @@ class Character:
             self.random = True
         elif "n" in self.random:
             self.random = False
+        self.abilities()
         self.race = Race.choosing()
         self.no_subrace = ["human", "half elf", "half orc",
                       "tiefling", "goliath"]
         if self.race not in self.no_subrace:
             self.subrace = Race.choosing_subrace()
-        self.advantage = False
-        self.disadvantage = False
-        self.abilities()
         if self.race in self.no_subrace:
-            self.r_asi()
+            Race.r_asi(self)
         else:
-            self.r_asi()
-            self.sr_asi()
-        self.race_attributes()
+            Race.r_asi(self)
+            Race.sr_asi(self)
+        Race.race_attributes(self)
         if self.race not in self.no_subrace:
-            self.subrace_attributes()
+            Race.subrace_attributes(self)
         self.proficiency()
         self.char_class = Classes.choosing(self)
         self.char_subclass = Classes.choosing_subclass(self)
         self.hp = Classes.hitpoints(self)
+        Classes.saving_throws(self)
+        Classes.skills(self)
         return
        
     def abilities(self):
@@ -407,7 +408,33 @@ class Character:
             self.advantage == False
             self.disadvantage == False
         return game_situation
+    
+    def unarmed_attack(self):
+        to_hit = d.roll(1, 20) + self._ability_mods.get("Strength")
+        if to_hit >= 0:
+            hit = True
+        else:
+            hit = False
+        if hit:
+            print(f"{self._name} rolled {to_hit} to hit")
+            damage = d.roll(1, 4) + self._ability_mods.get("Strength")
+        print(f"{damage} points of bludgeoning damage")
+        return damage
+    
+class Race:
+    def __init__(self, r_asi=True):
+        self.race = self.choosing()
+        self.subrace = self.choosing_subrace()
+        return self.race
+    
+    def choosing():
+        race = input("Choose your character's race: ").lower().strip()
+        return race
         
+    def choosing_subrace():
+        subrace = input("Choose your character's subrace: ").lower().strip()
+        return subrace
+    
     def r_asi(self):
         """
         Calculates the ability score increase based on the race chosen by the
@@ -571,6 +598,7 @@ class Character:
             Goliath.languages(self)
             Goliath.natural_athlete(self)
             Goliath.stone_endurance(self)
+        return
             
     def subrace_attributes(self):
         """
@@ -618,32 +646,7 @@ class Character:
             ScourgeAasimar.radiant_consumption(self)
         elif self.subrace == "fallen aasimar":
             FallenAasimar.necrotic_shroud(self)
-    
-    def unarmed_attack(self):
-        to_hit = d.roll(1, 20) + self._ability_mods.get("Strength")
-        if to_hit >= 0:
-            hit = True
-        else:
-            hit = False
-        if hit:
-            print(f"{self._name} rolled {to_hit} to hit")
-            damage = d.roll(1, 4) + self._ability_mods.get("Strength")
-        print(f"{damage} points of bludgeoning damage")
-        return damage
-    
-class Race:
-    def __init__(self, r_asi=True):
-        self.race = self.choosing()
-        self.subrace = self.choosing_subrace()
-        return self.race
-    
-    def choosing():
-        race = input("Choose your character's race: ").lower().strip()
-        return race
-        
-    def choosing_subrace():
-        subrace = input("Choose your character's subrace: ").lower().strip()
-        return subrace
+        return
             
 class Dwarf:
     def __init__(self):
@@ -1342,7 +1345,7 @@ class Classes:
                 hp_first = 10 + self._ability_mods.get("Constitution")
                 hp = hp_first + (d.roll((self.level - 1), 10)) + (self.level - 1) * (self._ability_mods.get("Constitution"))
         elif self.char_class in d12:
-            if self.char_class == 1:
+            if self.level == 1:
                 hp_first = 12 + self._ability_mods.get("Constitution")
                 hp = hp_first
             elif self.level > 1:
@@ -1351,8 +1354,113 @@ class Classes:
         print(f"{self._name} has {hp} hitpoints.")
         self.hp = hp
         return self.hp
+    
+    def saving_throws(self):
+        if self.char_class == "barbarian":
+            self.save_proficiencies["Strength"] = True
+            self.save_proficiencies["Constitution"] = True
+        elif self.char_class == "bard":
+            self.save_proficiencies["Dexterity"] = True
+            self.save_proficiencies["Charisma"] = True
+        elif self.char_class == "cleric":
+            self.save_proficiencies["Wisdom"] = True
+            self.save_proficiencies["Charisma"] = True
+        elif self.char_class == "druid":
+            self.save_proficiencies["Intelligence"] = True
+            self.save_proficiencies["Wisdom"] = True
+        elif self.char_class == "fighter":
+            self.save_proficiencies["Strength"] = True
+            self.save_proficiencies["Constitution"] = True
+        elif self.char_class == "monk":
+            self.save_proficiencies["Strength"] = True
+            self.save_proficiencies["Dexterity"] = True
+        elif self.char_class == "paladin":
+            self.save_proficiencies["Wisdom"] = True
+            self.save_proficiencies["Charisma"] = True
+        elif self.char_class == "rogue":
+            self.save_proficiencies["Dexterity"] = True
+            self.save_proficiencies["Intelligence"] = True
+        elif self.char_class == "sorcerer":
+            self.save_proficiencies["Constitution"] = True
+            self.save_proficiencies["Charisma"] = True
+        elif self.char_class == "warlock":
+            self.save_proficiencies["Wisdom"] = True
+            self.save_proficiencies["Charisma"] = True
+        elif self.char_class == "wizard":
+            self.save_proficiencies["Intelligence"] = True
+            self.save_proficiencies["Wisdom"] = True
+        return self.save_proficiencies
+    
+    def skills(self):
+        if self.char_class == "barbarian":
+            player_choice = input("Skill proficiencies - Choose two from Animal Handling, Athletics, Intimidation, Nature, Perception, and Survival: ").lower()
+        elif self.char_class == "bard":
+            player_choice = input("Skill proficiencies - Choose any three: ").lower()
+        elif self.char_class == "cleric":
+            player_choice = input("Skill proficiencies - Choose two from History, Insight, Medicine, Persuasion, Religion: ").lower()
+        elif self.char_class == "druid":
+            player_choice = input("Skill proficiencies - Choose two from Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, and Survival: ").lower()
+        elif self.char_class == "fighter":
+            player_choice = input("Skill proficiencies - Choose two from Acrobatics, Animal Handling, Athletics, History, Insight, Intimidation, Perception, and Survival: ").lower()
+        elif self.char_class == "monk":
+            player_choice = input("Skill proficiencies - Choose two from Acrobatics, Athletics, History, Insight, Religion, and Stealth: ").lower()
+        elif self.char_class == "paladin":
+            player_choice = input("Skill proficiencies - Choose two from Athletics, Insight, Intimidation, Medicine, Persuasion, and Religion: ").lower()
+        elif self.char_class == "rogue":
+            player_choice = input("Skill proficiencies - Choose four from Acrobatics, Athletics, Deception, Insight, Intimidation, Investigation, Perception, Performance, Persuasion, Sleight of Hand, and Stealth: ").lower()
+        elif self.char_class == "sorcerer":
+            player_choice = input("Skill proficiencies - Choose two from Arcana, Deception, Insight, Intimidation, Persuasion, and Religion: ").lower()
+        elif self.char_class == "warlock":
+            player_choice = input("Skill proficiencies - Choose two from Arcana, Deception, History, Intimidation, Investigation, Nature, and Religion: ").lower()
+        elif self.char_class == "wizard":
+            player_choice = input("Skill proficiencies - Choose two from Arcana, History, Insight, Investigation, Medicine, and Religion: ").lower()
+        if "acrobatics" in player_choice:
+            self.skill_proficiencies["acrobatics"] = True
+        if "animal handling" in player_choice:
+            self.skill_proficiencies["animal handling"] = True
+        if "arcana" in player_choice:
+            self.skill_proficiencies["arcana"] = True
+        if "athletics" in player_choice:
+            self.skill_proficiencies["athletics"] = True
+        if "deception" in player_choice:
+            self.skill_proficiencies["deception"] = True
+        if "history" in player_choice:
+            self.skill_proficiencies["history"] = True
+        if "insight" in player_choice:
+            self.skill_proficiencies["insight"] = True
+        if "intimidation" in player_choice:
+            self.skill_proficiencies["intimidation"] = True
+        if "medicine" in player_choice:
+            self.skill_proficiencies["medicine"] = True
+        if "nature" in player_choice:
+            self.skill_proficiencies["nature"] = True
+        if "perception" in player_choice:
+            self.skill_proficiencies["perception"] = True
+        if "performance" in player_choice:
+            self.skill_proficiencies["performance"] = True
+        if "persuasion" in player_choice:
+            self.skill_proficiencies["persuasion"] = True
+        if "religion" in player_choice:
+            self.skill_proficiencies["religion"] = True
+        if "sleight of hand" in player_choice:
+            self.skill_proficiencies["sleight of hand"] = True
+        if "stealth" in player_choice:
+            self.skill_proficiencies["stealth"] = True
+        if "survival" in player_choice:
+            self.skill_proficiencies["survival"] = True
+        return self.skill_proficiencies
+            
+class Barbarian:
+    def __init__(self):
+        self.light_armor_proficiency = True
+        self.medium_armor_proficiency = True
+        self.shield_proficiency = True
+        self.simple_weapons_proficiency = True
+        self.martial_weapons_proficiency = True
+        return
         
-        
+    def rage(self):
+        pass
         
 c = Campaign()
 
