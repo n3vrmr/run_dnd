@@ -4,7 +4,7 @@ Created on Sat Apr 23 00:32:22 2022
 
 @author: Nevermore
 """
-# This is the second file
+# This file is no longer in use
 
 ability_scores = {}
 score = True
