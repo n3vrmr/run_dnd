@@ -4,7 +4,7 @@ Created on Sat Apr 23 02:34:01 2022
 
 @author: Nevermore
 """
-# This is the final file
+# This file is no longer in use
 
 import dice as d
 import abilities as ab
