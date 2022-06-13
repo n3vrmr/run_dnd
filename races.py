@@ -367,9 +367,13 @@ class HalfElf:
         return self.charm_save_adv
     
     def skill_versatility(self):
-        print("Choose two skill proficiencies")
         t.sleep(1.2)
-        # Character.gain_skill_proficiency(self)
+        first = input("Choose a skill proficiency: ")
+        self.skill_proficiencies[f"{first}"] = True
+        t.sleep(1.2)
+        second = input("Choose a skill proficiency: ")
+        self.skill_proficiencies[f"{second}"] = True
+        return self.skill_proficiencies
     
     def half_elf_asi(self):
         if self.race == "half elf":
