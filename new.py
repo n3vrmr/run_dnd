@@ -157,7 +157,6 @@ class Character:
     def __init__(self, name, level:int):
         self._name = input("Character name: ")
         self.level = int(input("Character level: "))
-        self.languages = []
         self.save_proficiencies = {"Strength":False, "Dexterity":False,
                                    "Constitution":False, "Intelligence":False,
                                    "Wisdom":False, "Charisma":False}
@@ -179,6 +178,7 @@ class Character:
             self.random = False
         self.abilities()
         self.race = Race.choosing()
+        self.languages = Race.languages(self)
         self.no_subrace = ["human", "half elf", "half orc",
                       "tiefling", "goliath"]
         if self.race not in self.no_subrace:
@@ -195,6 +195,7 @@ class Character:
         self.char_class = Classes.choosing(self)
         self.char_subclass = Classes.choosing_subclass(self)
         self.hp = Classes.hitpoints(self)
+        Classes.set_class(self)
         Classes.saving_throws(self)
         Classes.skills(self)
         return
@@ -380,34 +381,6 @@ class Character:
         if "survival" in player_choice:
             self.skill_proficiencies["survival"] = True
         return self.skill_proficiencies
-        
-    def adv_dis(self):
-        """
-        Make a roll with either advantage or disadvantage.
-        If you have both advantage and disadvantage, they cancel out.
-        Advantage and disadvantage do not stack.
-        
-        Returns
-        -------
-        game_situation : the highest roll for advantage and the lowest
-        roll for disadvantage.
-        """
-        if self.advantage == True:
-            rolls = d.roll(2,20,True)
-            game_situation = max(rolls)
-            print("Rolling with advantage:",game_situation)
-            if 20 in rolls:
-                print("\033[1;32;40mNatural twenty! Critical success!\033[0m")
-        elif self.disadvantage == True:
-            rolls = d.roll(2,20,True)
-            game_situation = min(rolls)
-            print("Rolling with disadvantage:",game_situation)
-            if 1 in rolls:
-                print("\033[1;31;47mUh-oh, natural one! Critical fail!\033[0m")
-        elif self.advantage == True and self.disadvantage == True:
-            self.advantage == False
-            self.disadvantage == False
-        return game_situation
     
     def unarmed_attack(self):
         to_hit = d.roll(1, 20) + self._ability_mods.get("Strength")
@@ -422,10 +395,10 @@ class Character:
         return damage
     
 class Race:
-    def __init__(self, r_asi=True):
+    def __init__(self):
         self.race = self.choosing()
         self.subrace = self.choosing_subrace()
-        return self.race
+        return
     
     def choosing():
         race = input("Choose your character's race: ").lower().strip()
@@ -546,28 +519,27 @@ class Race:
 
         """
         if self.race == "dwarf":
-            Dwarf.languages(self)
             Dwarf.darkvision(self)
             Dwarf.speed(self)
             Dwarf.dwarven_combat_training(self)
             Dwarf.dwarven_resilience(self)
         elif self.race == "elf":
-            Elf.languages(self)
             Elf.darkvision(self)
             Elf.keen_senses(self)
             Elf.fey_ancestry(self)
             Elf.trance(self)
         elif self.race == "halfling":
-            Halfling.languages(self)
             Halfling.brave(self)
             Halfling.speed(self)
             Halfling.size(self)
             Halfling.halfling_nimbleness(self)
             Halfling.lucky(self)
         elif self.race == "human":
-            Human.languages(self)
+            pass
+        elif self.race == "dragonborn":
+            Dragonborn.size(self)
+            Dragonborn.speed(self)
         elif self.race == "gnome":
-            Gnome.languages(self)
             Gnome.speed(self)
             Gnome.size(self)
             Gnome.darkvision(self)
@@ -575,11 +547,9 @@ class Race:
         elif self.race == "half elf":
             HalfElf.darkvision(self)
             HalfElf.fey_ancestry(self)
-            HalfElf.languages(self)
             HalfElf.skill_versatility(self)
         elif self.race == "half orc":
             HalfOrc.darkvision(self)
-            HalfOrc.languages(self)
             HalfOrc.relentless_endurance(self)
             HalfOrc.savage_attacks(self)
             HalfOrc.menacing(self)
@@ -587,15 +557,12 @@ class Race:
             Tiefling.darkvision(self)
             Tiefling.hellish_resistance(self)
             Tiefling.infernal_legacy(self)
-            Tiefling.languages(self)
         elif self.race == "aasimar":
             Aasimar.celestial_resistance(self)
             Aasimar.darkvision(self)
             Aasimar.healing_hands(self)
-            Aasimar.languages(self)
             Aasimar.light_bearer(self)
         elif self.race == "goliath":
-            Goliath.languages(self)
             Goliath.natural_athlete(self)
             Goliath.stone_endurance(self)
         return
@@ -647,12 +614,38 @@ class Race:
         elif self.subrace == "fallen aasimar":
             FallenAasimar.necrotic_shroud(self)
         return
+    
+    def languages(self):
+        if self.race == "dwarf":
+            languages = ["Common","Dwarvish"]
+        elif self.race == "elf":
+            languages = ["Common","Elvish"]
+        elif self.race == "halfling":
+            languages = ["Common","Halfling"]
+        elif self.race == "human":
+            languages = ["Common"]
+            extra_language = input("Choose another language: ")
+            languages.append(extra_language)
+        elif self.race == "dragonborn":
+            languages = ["Common","Draconic"]
+        elif self.race == "gnome":
+            languages = ["Common","Dwarvish"]
+        elif self.race == "half elf":
+            languages = ["Common", "Elvish"]
+            extra_language = input("Choose another language: ")
+            languages.append(extra_language)
+        elif self.race == "half orc":
+            languages = ["Common", "Orc"]
+        elif self.race == "tiefling":
+            languages = ["Common", "Infernal"]
+        elif self.race == "aasimar":
+            languages = ["Common", "Celestial"]
+        elif self.race == "goliath":
+            languages = ["Common", "Giant"]
+        self.languages = languages
+        return self.languages
             
 class Dwarf:
-    def __init__(self):
-        self.languages = []
-        return
-    
     def speed(self):
         speed = 25
         self.speed = speed
@@ -705,11 +698,6 @@ class Dwarf:
             mason_tools_proficiency = True
             self.mason_tools_proficiency = mason_tools_proficiency
             return self.mason_tools_proficiency
-        
-    def languages(self):
-        languages = ["Common","Dwarvish"]
-        self.languages = languages
-        return self.languages
     
     def dwarf_asi(self):
         if self.race == "dwarf":
@@ -744,10 +732,6 @@ class MountainDwarf(Dwarf):
         return self.ability_scores
         
 class Elf:
-    def __init__(self):
-        self.languages = []
-        return
-    
     def speed(self):
         speed = 30
         self.speed = speed
@@ -776,11 +760,6 @@ class Elf:
         trance = True
         self.trance = trance
         return self.trance
-    
-    def languages(self):
-        languages = ["Common","Elvish"]
-        self.languages = languages
-        return self.languages
     
     def elf_asi(self):
         if self.race == "elf":
@@ -873,10 +852,6 @@ class Drow(Elf):
         return self.ability_scores
 
 class Halfling:
-    def __init__(self):
-        self.languages = []
-        return
-    
     def speed(self):
         speed = 25
         self.speed = speed
@@ -897,11 +872,6 @@ class Halfling:
     
     def halfling_nimbleness(self):
         pass
-    
-    def languages(self):
-        languages = ["Common","Halfling"]
-        self.languages = languages
-        return self.languages
         
     def halfling_asi(self):
         if self.race == "halfling":
@@ -933,10 +903,6 @@ class Stout(Halfling):
         return self.ability_scores
     
 class Human:
-    def __init__(self):
-        self.languages = []
-        return
-    
     def speed(self):
         speed = 30
         self.speed = speed
@@ -946,13 +912,6 @@ class Human:
         size = "Medium"
         self.size = size
         return self.size
-    
-    def languages(self):
-        languages = ["Common"]
-        self.languages = languages
-        extra_language = input("Choose another language: ")
-        self.languages.append(extra_language)
-        return self.languages
         
     def human_asi(self):
         if self.race == "human":
@@ -965,10 +924,6 @@ class Human:
         return self.ability_scores
         
 class Dragonborn:
-    def __init__(self):
-        self.languages = []
-        return
-    
     def speed(self):
         speed = 30
         self.speed = speed
@@ -978,11 +933,6 @@ class Dragonborn:
         size = "Medium"
         self.size = size
         return self.size
-    
-    def languages(self):
-        languages = ["Common","Draconic"]
-        self.languages = languages
-        return self.languages
     
     def dragonborn_asi(self):
         if self.race == "dragonborn":
@@ -1015,10 +965,6 @@ class SilverDragonborn(Dragonborn):
         return self.cold_resistance
 
 class Gnome:
-    def __init__(self):
-        self.languages = []
-        return
-    
     def speed(self):
         speed = 25
         self.speed = speed
@@ -1042,11 +988,6 @@ class Gnome:
         magic_cha_save_adv = True
         self.magic_cha_save_adv = magic_cha_save_adv
         return [self.magic_int_save_adv, self.magic_wis_save_adv, self.magic_cha_save_adv]
-    
-    def languages(self):
-        languages = ["Common","Dwarvish"]
-        self.languages = languages
-        return self.languages
 
     def gnome_asi(self):
         if self.race == "gnome":
@@ -1078,10 +1019,6 @@ class RockGnome(Gnome):
         return self.ability_scores
     
 class HalfElf:
-    def __init__(self):
-        self.languages = []
-        return
-    
     def speed(self):
         speed = 30
         self.speed = speed
@@ -1096,12 +1033,6 @@ class HalfElf:
         darkvision = [True,60]
         self.darkvision = darkvision
         return self.darkvision
-    
-    def languages(self):
-        languages = ["Common", "Elvish"]
-        self.languages = languages
-        extra_language = input("Choose another language: ")
-        self.languages.append(extra_language)
     
     def fey_ancestry(self):        
         charm_save_adv = True
@@ -1119,10 +1050,6 @@ class HalfElf:
         return self.ability_scores
     
 class HalfOrc:
-    def __init__(self):
-        self.languages = []
-        return
-    
     def speed(self):
         speed = 30
         self.speed = speed
@@ -1137,11 +1064,6 @@ class HalfOrc:
         darkvision = [True,60]
         self.darkvision = darkvision
         return self.darkvision
-    
-    def languages(self):
-        languages = ["Common", "Orc"]
-        self.languages = languages
-        return self.languages
     
     def relentless_endurance(self):
         pass
@@ -1160,10 +1082,6 @@ class HalfOrc:
         return self.ability_scores
     
 class Tiefling:
-    def __init__(self):
-        self.languages = []
-        return
-    
     def speed(self):
         speed = 30
         self.speed = speed
@@ -1178,11 +1096,6 @@ class Tiefling:
         darkvision = [True,60]
         self.darkvision = darkvision
         return self.darkvision
-    
-    def languages(self):
-        languages = ["Common", "Infernal"]
-        self.languages = languages
-        return self.languages
     
     def hellish_resistance(self):
         fire_resistance = True
@@ -1199,10 +1112,6 @@ class Tiefling:
         return self.ability_scores
     
 class Aasimar:
-    def __init__(self):
-        self.languages = []
-        return
-    
     def speed(self):
         speed = 30
         self.speed = speed
@@ -1217,11 +1126,6 @@ class Aasimar:
         darkvision = [True,60]
         self.darkvision = darkvision
         return self.darkvision
-    
-    def languages(self):
-        languages = ["Common", "Celestial"]
-        self.languages = languages
-        return self.languages
     
     def celestial_resistance(self):
         radiant_resistance = True
@@ -1269,15 +1173,6 @@ class FallenAasimar(Aasimar):
         return self.ability_scores
 
 class Goliath:
-    def __init__(self):
-        self.languages = []
-        return
-    
-    def languages(self):
-        languages = ["Common", "Giant"]
-        self.languages = languages
-        return self.languages
-    
     def natural_athlete(self):
         self.skill_proficiencies["athletics"] = True
         return self.skill_proficiencies
@@ -1293,8 +1188,7 @@ class Goliath:
     
 class Classes:
     def __init__(self):
-        self.choosing()
-        self.choosing_subclass()
+        self.set_class()
         return
     
     def choosing(self):
@@ -1317,6 +1211,11 @@ class Classes:
             char_subclass = False
         self.char_subclass = char_subclass
         return self.char_subclass
+    
+    def set_class(self):
+        if self.char_class == "barbarian":
+            self.c_class = Barbarian
+        return self.c_class
     
     def hitpoints(self):
         d6 = ["sorcerer", "wizard"]
@@ -1460,8 +1359,46 @@ class Barbarian:
         return
         
     def rage(self):
-        pass
+        if self.level < 3:
+            ragesp_day = 2
+        elif self.level >= 3 and self.level <= 5:
+            ragesp_day = 3
+        elif self.level >= 6 and self.level <= 11:
+            ragesp_day = 4
+        elif self.level >= 12 and self.level <= 16:
+            ragesp_day = 5
+        elif self.level >= 17 and self.level <= 19:
+            ragesp_day = 6
+        else:
+            ragesp_day = "Unlimited"
+        if self.level >= 1 and self.level <= 8:
+            rage_damage = 2
+        elif self.level >= 9 and self.level <= 15:
+            rage_damage = 3
+        elif self.level >= 16:
+            rage_damage = 4
+        if ragesp_day != 0:
+            ask = input("Would you like to rage? ")
+            if "y" in ask:
+                rage = True
+                if self.level < 20:
+                    ragesp_day = ragesp_day - 1
+            if rage:
+              print("You have advantage on Strength checks and saving throws. Use d.roll(2,20,True,True) and select advantage when making those rolls.")  
+              print(f"When you make a melee weapon attack while raging and hit, add {rage_damage} to your total damage.")
+              self.bludgeoning_resistance = True
+              self.piercing_resistance = True
+              self.slashing_resistance = True
+        if self.hp == 0:
+            rage = False
+        self.rage = rage
+        return self.rage
         
+    def unarmored_defense(self):
+        ac = 10 + self._ability_mods.get("Dexterity") + self._ability_mods.get("Constitution")
+        self.ac = ac
+        return self.ac
+    
 c = Campaign()
 
 def main():
