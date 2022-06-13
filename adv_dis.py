@@ -4,7 +4,7 @@
 Created on Wed May  4 16:26:11 2022
 @author: Nevermore
 """
-
+# This file is no longer in use
 import dice as d
 
 def adv_dis():
