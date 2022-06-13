@@ -24,7 +24,7 @@ def roll(n:int,d:int,s=False,q=False):
         total = total + result
         if s:
             box.append(result)
-    if s and q==False:
+    if s and q == False:
         print("Rolling...")
         t.sleep(1.8)
         return box
