@@ -255,3 +255,9 @@ class Character:
         if "survival" in player_choice:
             self.skill_proficiencies["survival"] = True
         return self.skill_proficiencies
+
+def main():
+    print("Is it thursday yet?")
+    
+if __name__ == '__main__':
+    main()

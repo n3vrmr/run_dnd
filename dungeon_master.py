@@ -17,7 +17,7 @@ class DungeonMaster:
     def set_dm(self):
         dm = input("Who will be the Dungeon Master for this Campaign? ")
         self.dm = dm
-        print(f"{self.dm} will be the DM.")
+        print(f"\033[1;35;47m{self.dm} will be the DM.\033[0m")
         return self.dm
     
     def weather_set(self, weather):
@@ -97,3 +97,9 @@ class DungeonMaster:
     
     def end_initiative(self):
         pass
+    
+def main():
+    print("How do you wanna do this?")
+    
+if __name__ == '__main__':
+    main()

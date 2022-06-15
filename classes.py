@@ -222,6 +222,63 @@ class Barbarian:
         ac = 10 + self._ability_mods.get("Dexterity") + self._ability_mods.get("Constitution")
         self.ac = ac
         return self.ac
+    
+    def reckless_attack(self):
+        if self.level >= 2:
+            ra = input("Reckless? ")
+            if "y" in ra:
+                self.reckless = True
+            else:
+                self.reckless = False
+            if self.reckless == True:
+                print("Melee weapon attacks using Strength for this turn made with advantage. Attacks against you have advantage until your next turn.")
+        return self.reckless
+    
+    def danger_sense(self):
+        if self.level >= 2:
+            print("Advantage on Dex saves against effects you can see. Cannot be blinded, deafened or incapacitated.")
+            self.dex_save_adv = True
+        return self.dex_save_adv
+    
+    def extra_attack(self):
+        pass
+    
+    def fast_movement(self):
+        if self.level >= 5:
+            self.speed = self.speed + 10
+        return self.speed
+    
+    def feral_instinct(self):
+        pass
+    
+    def brutal_critical(self):
+        pass
+    
+    def relentless_rage(self):
+        pass
+    
+    def persistent_rage(self):
+        pass
+    
+    def indomitable_might(self):
+        pass
+    
+    def primal_champion(self):
+        if self.level == 20:
+            self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 4
+            self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 4
+            self._ability_mods = {}
+            modifier = True
+            while modifier:
+                modifier = False
+                self._ability_mods["Strength"] = (self.ability_scores.get("Strength") - 10)//2
+                self._ability_mods["Dexterity"] = (self.ability_scores.get("Dexterity") - 10)//2
+                self._ability_mods["Constitution"] = (self.ability_scores.get("Constitution") - 10)//2
+                self._ability_mods["Intelligence"] = (self.ability_scores.get("Intelligence") - 10)//2
+                self._ability_mods["Wisdom"] = (self.ability_scores.get("Wisdom") - 10)//2
+                self._ability_mods["Charisma"] = (self.ability_scores.get("Charisma") - 10)//2
+                print("Ability modifiers:",self._ability_mods)
+        return self.ability_scores
 
 def main():
     print("Rogues and Bards are op...")

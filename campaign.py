@@ -45,18 +45,6 @@ class Campaign:
     
     def player_characters(self):
         pass
-    
-    # def unarmed_attack(self):
-    #     to_hit = d.roll(1, 20) + self._ability_mods.get("Strength")
-    #     if to_hit >= 0:
-    #         hit = True
-    #     else:
-    #         hit = False
-    #     if hit:
-    #         print(f"{self._name} rolled {to_hit} to hit")
-    #         damage = d.roll(1, 4) + self._ability_mods.get("Strength")
-    #     print(f"{damage} points of bludgeoning damage")
-    #     return damage
 
 c = Campaign()
 

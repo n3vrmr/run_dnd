@@ -6,9 +6,6 @@ Created on Wed May 25 21:39:05 2022
 """
 
 import dice as d
-from new import Character
-from weapons import Battleaxe
-from monster import beholder
 
 class Combat:
     def __init__(self, initiative = {}):
@@ -20,7 +17,14 @@ class Combat:
     def attacking(self, weapon):
         self.weapon = weapon
         
-        
-c = Character("name", 0)
-
-w = Combat.attacking(Battleaxe()) # returns TypeError: attacking() missing 1 required positional argument: 'weapon'
+    def unarmed_attack(self):
+        to_hit = d.roll(1, 20) + self._ability_mods.get("Strength")
+        if to_hit >= 0:
+            hit = True
+        else:
+            hit = False
+        if hit:
+            print(f"{self._name} rolled {to_hit} to hit")
+            damage = d.roll(1, 4) + self._ability_mods.get("Strength")
+        print(f"{damage} points of bludgeoning damage")
+        return damage

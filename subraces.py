@@ -321,3 +321,9 @@ class FallenAasimar(Aasimar):
         if self.subrace == "fallen aasimar":
             self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 1
         return self.ability_scores
+    
+def main():
+    print("Run to the hills...")
+    
+if __name__ == '__main__':
+    main()

@@ -489,3 +489,9 @@ class Goliath:
             self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 2
             self.ability_scores["Constitution"] = self.ability_scores.get("Constitution") + 1
         return self.ability_scores
+    
+def main():
+    print("Half-elves rule")
+    
+if __name__ == '__main__':
+    main()
