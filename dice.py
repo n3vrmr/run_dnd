@@ -40,7 +40,7 @@ def roll(n:int,d:int,s=False,q=False):
             elif total == 20:
                 print("\033[1;32;40mNatural twenty! Critical success!\033[0m")
             return total
-        if "adv" in a:
+        elif "adv" in a:
             roll = max(box)
             print("Rolling with advantage...")
             t.sleep(1.8)
