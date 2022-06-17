@@ -5,6 +5,7 @@ Created on Mon Jun 13 14:18:36 2022
 @author: Nevermore
 """
 
+import dice as d
 import d6_roller
 import time as t
 from races import Race
@@ -255,6 +256,75 @@ class Character:
         if "survival" in player_choice:
             self.skill_proficiencies["survival"] = True
         return self.skill_proficiencies
+    
+    def make_saving_throw(self, ability):
+        if ability == "str":
+            ability = "Strength"
+        elif ability == "dex":
+            ability = "Dexterity"
+        elif ability == "con":
+            ability = "Constitution"
+        elif ability == "int":
+            ability = "Intelligence"
+        elif ability == "wis":
+            ability = "Wisdom"
+        elif ability == "cha":
+            ability = "Charisma"
+        print(f"Making {ability} save...")
+        self._saving = True
+        while self._saving:
+            if self.save_proficiencies.get(f"{ability}") == True:
+                saving_throw = d.roll(2,20,True,True) + self._ability_mods.get(f"{ability}") + self.proficiency_bonus
+            else:
+                saving_throw = d.roll(2,20,True,True) + self._ability_mods.get(f"{ability}")
+            self._saving = False
+        self.saving_throw = saving_throw
+        t.sleep(1.2)
+        print("Total:", self.saving_throw)
+        return self.saving_throw
+    
+    def make_skill_check(self, skill):
+        print(f"Making {skill} check...")
+        str_skills = ["athletics"]
+        dex_skills = ["acrobatics", "sleight of hand", "stealth"]
+        int_skills = ["arcana", "history", "investigation", "nature",
+                      "religion"]
+        wis_skills = ["animal handling", "insight", "medicine", "perception",
+                      "survival"]
+        cha_skills = ["deception", "intimidation", "performance", "persuasion"]
+        self._check = True
+        while self._check:
+            if skill in str_skills:
+                if self.skill_proficiencies.get(f"{skill}") == True:
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+                else:
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Strength")
+            elif skill in dex_skills:
+                if self.skill_proficiencies.get(f"{skill}") == True:
+                   skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+                else:
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Dexterity")
+            elif skill in int_skills:
+                if self.skill_proficiencies.get(f"{skill}") == True:
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Intelligence") + self.proficiency_bonus
+                else:
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Intelligence")
+            elif skill in wis_skills:
+                if self.skill_proficiencies.get(f"{skill}") == True:
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Wisdom") + self.proficiency_bonus
+                else:
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Wisdom")
+            elif skill in cha_skills:
+                if self.skill_proficiencies.get(f"{skill}") == True:
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Charisma") + self.proficiency_bonus
+                else:
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Charisma")
+            self._check = False
+        self.skill_check = skill_check
+        t.sleep(1.2)
+        print("Total:", self.skill_check)
+        return self.skill_check
+        
 
 def main():
     print("Is it thursday yet?")

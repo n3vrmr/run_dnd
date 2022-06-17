@@ -2,7 +2,7 @@
 """
 Created on Fri Apr 29 15:46:19 2022
 
-@author: Nevermore, Luiza
+@author: Nevermore
 """
 # This is the third file
 
@@ -38,7 +38,7 @@ class Classes:
         if self.char_class == "barbarian":
             self.c_class = Barbarian
         elif self.char_class == "bard":
-            pass
+            self.c_class = Bard
         return self.c_class
     
     def hitpoints(self):
@@ -279,6 +279,68 @@ class Barbarian:
                 self._ability_mods["Charisma"] = (self.ability_scores.get("Charisma") - 10)//2
                 print("Ability modifiers:",self._ability_mods)
         return self.ability_scores
+
+class Bard:
+    def __init__(self):
+        self.simple_weapons_proficiency = True
+        self.hand_xbow_proficiency = True
+        self.longsword_proficiency = True
+        self.rapier_proficiency = True
+        self.shortsword_proficiency = True
+        self.spellcasting = True
+        return
+    
+    def bardic_inspiration(self):
+        if self._ability_mods.get("Charisma") < 1:
+            self.uses = 1
+        else:
+            self.uses = self._ability_mods.get("Charisma")
+        if self.level < 5:
+            inspiration_die = "d6"
+        elif self.level >= 5 and self.level < 10:
+            inspiration_die = "d8"
+        elif self.level >= 10 and self.level < 15:
+            inspiration_die = "d10"
+        elif self.level >= 15:
+            inspiration_die = "d12"
+        self.inspiration_die = inspiration_die
+        return self.inspiration_die
+    
+    def inspire(self, character):
+        self.inspiration = self.bardic_inspiration()
+        self.uses = self.uses - 1
+        return self.inspiration
+    
+    def jack_of_all_trades(self, skill):
+        if self.level >= 2:
+            if self.skill_proficiencies.get(f"{skill}") == False:
+                pass # + self.proficiency_bonus//2
+            
+    def song_of_rest(self):
+        if self.level >=2 and self.level < 9:
+            sor_die = "1d6"
+        elif self.level >= 9 and self.level < 13:
+            sor_die = "1d8"
+        elif self.level >= 13 and self.level < 17:
+            sor_die = "1d10"
+        elif self.level >= 17:
+            sor_die = "1d12"
+        self.sor_die = sor_die
+        return self.sor_die
+    
+    def expertise(self, skill_1, skill_2):
+        if self.level >= 3 and self.level < 10:
+            if self.skill_proficiency.get(f"{skill_1}") == True:
+                self.skill_proficiencies[f"{skill_1}"] = "expertise"
+            if self.skill_proficiency.get(f"{skill_2}") == True:
+                self.skill_proficiencies[f"{skill_2}"] = "expertise"
+        elif self.level >= 10:
+            if self.skill_proficiency.get(f"{skill_1}") == True:
+                self.skill_proficiencies[f"{skill_1}"] = "expertise"
+            if self.skill_proficiency.get(f"{skill_2}") == True:
+                self.skill_proficiencies[f"{skill_2}"] = "expertise"
+        return self.skill_proficiencies
+            
 
 def main():
     print("Rogues and Bards are op...")

@@ -44,7 +44,7 @@ def roll(n:int,d:int,s=False,q=False):
             roll = max(box)
             print("Rolling with advantage...")
             t.sleep(1.8)
-            print(roll)
+            print("Dice result:",roll)
             if roll == 20:
                 print("\033[1;32;40mNatural twenty! Critical success!\033[0m")
             return roll
@@ -52,7 +52,7 @@ def roll(n:int,d:int,s=False,q=False):
             roll = min(box)
             print("Rolling with disadvantage...")
             t.sleep(1.8)
-            print(roll)
+            print("Dice result:",roll)
             if roll == 1:
                 print("\033[1;31;47mUh-oh, natural one! Critical fail!\033[0m")
             return roll
