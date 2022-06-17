@@ -297,26 +297,46 @@ class Character:
             if skill in str_skills:
                 if self.skill_proficiencies.get(f"{skill}") == True:
                     skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+                elif self.skill_proficiencies.get(f"{skill}") == "expertise":
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Strength") + (self.proficiency_bonus * 2)
+                elif self.skill_proficiencies.get(f"{skill}") == "jack":
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Strength") + (self.proficiency_bonus//2)
                 else:
                     skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Strength")
             elif skill in dex_skills:
                 if self.skill_proficiencies.get(f"{skill}") == True:
                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+                elif self.skill_proficiencies.get(f"{skill}") == "expertise":
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Dexterity") + (self.proficiency_bonus * 2)
+                elif self.skill_proficiencies.get(f"{skill}") == "jack":
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Dexterity") + (self.proficiency_bonus//2)
                 else:
                     skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Dexterity")
             elif skill in int_skills:
                 if self.skill_proficiencies.get(f"{skill}") == True:
                     skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Intelligence") + self.proficiency_bonus
+                elif self.skill_proficiencies.get(f"{skill}") == "expertise":
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Intelligence") + (self.proficiency_bonus * 2)
+                elif self.skill_proficiencies.get(f"{skill}") == "jack":
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Intelligence") + (self.proficiency_bonus//2)
                 else:
                     skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Intelligence")
             elif skill in wis_skills:
                 if self.skill_proficiencies.get(f"{skill}") == True:
                     skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Wisdom") + self.proficiency_bonus
+                elif self.skill_proficiencies.get(f"{skill}") == "expertise":
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Wisdom") + (self.proficiency_bonus * 2)
+                elif self.skill_proficiencies.get(f"{skill}") == "jack":
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Wisdom") + (self.proficiency_bonus//2)
                 else:
                     skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Wisdom")
             elif skill in cha_skills:
                 if self.skill_proficiencies.get(f"{skill}") == True:
                     skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Charisma") + self.proficiency_bonus
+                elif self.skill_proficiencies.get(f"{skill}") == "expertise":
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Charisma") + (self.proficiency_bonus * 2)
+                elif self.skill_proficiencies.get(f"{skill}") == "jack":
+                    skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Charisma") + (self.proficiency_bonus//2)
                 else:
                     skill_check = d.roll(2,20,True,True) + self._ability_mods.get("Charisma")
             self._check = False
@@ -324,7 +344,27 @@ class Character:
         t.sleep(1.2)
         print("Total:", self.skill_check)
         return self.skill_check
-        
+    
+    def level_up(self):
+        d6 = ["sorcerer", "wizard"]
+        d8 = ["bard", "cleric", "druid", "monk", "rogue", "warlock"]
+        d10 = ["fighter", "paladin"]
+        d12 = ["barbarian"]
+        self.level = self.level + 1
+        if self.char_class in d6:
+            new_hitpoints = self.hp + d.roll(1,6) + self._ability_mods.get("Constitution")
+            self.hp = new_hitpoints
+        elif self.char_class in d8:
+            new_hitpoints = self.hp + d.roll(1,8) + self._ability_mods.get("Constitution")
+            self.hp = new_hitpoints
+        elif self.char_class in d10:
+            new_hitpoints = self.hp + d.roll(1,10) + self._ability_mods.get("Constitution")
+            self.hp = new_hitpoints
+        elif self.char_class in d12:
+            new_hitpoints = self.hp + d.roll(1,12) + self._ability_mods.get("Constitution")
+            self.hp = new_hitpoints
+        print("New hitpoint total:", self.hp)
+        return self.level
 
 def main():
     print("Is it thursday yet?")

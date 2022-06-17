@@ -314,7 +314,10 @@ class Bard:
     def jack_of_all_trades(self, skill):
         if self.level >= 2:
             if self.skill_proficiencies.get(f"{skill}") == False:
-                pass # + self.proficiency_bonus//2
+                self.skill_proficiencies[f"{skill}"] = "jack"
+            else:
+                return self.skill_proficiencies
+        return self.skill_proficiencies
             
     def song_of_rest(self):
         if self.level >=2 and self.level < 9:
@@ -330,14 +333,14 @@ class Bard:
     
     def expertise(self, skill_1, skill_2):
         if self.level >= 3 and self.level < 10:
-            if self.skill_proficiency.get(f"{skill_1}") == True:
+            if self.skill_proficiencies.get(f"{skill_1}") == True:
                 self.skill_proficiencies[f"{skill_1}"] = "expertise"
-            if self.skill_proficiency.get(f"{skill_2}") == True:
+            if self.skill_proficiencies.get(f"{skill_2}") == True:
                 self.skill_proficiencies[f"{skill_2}"] = "expertise"
         elif self.level >= 10:
-            if self.skill_proficiency.get(f"{skill_1}") == True:
+            if self.skill_proficiencies.get(f"{skill_1}") == True:
                 self.skill_proficiencies[f"{skill_1}"] = "expertise"
-            if self.skill_proficiency.get(f"{skill_2}") == True:
+            if self.skill_proficiencies.get(f"{skill_2}") == True:
                 self.skill_proficiencies[f"{skill_2}"] = "expertise"
         return self.skill_proficiencies
             
