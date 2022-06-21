@@ -19,26 +19,29 @@ class Classes:
         self.char_class = char_class
         return self.char_class
     
-    def choosing_subclass(self):
-        level_1 = ["cleric", "sorcerer", "warlock"]
-        level_2 = ["druid", "wizard"]
-        level_3 = ["barbarian", "bard", "fighter", "monk", "paladin", "rogue"]
-        if self.char_class in level_1 and self.level >= 1:
-            char_subclass = input("Choose your subclass: ")
-        elif self.char_class in level_2 and self.level >= 2:
-            char_subclass = input("Choose your subclass: ")
-        elif self.char_class in level_3 and self.level >= 3:
-            char_subclass = input("Choose your subclass: ")
-        else:
-            char_subclass = False
-        self.char_subclass = char_subclass
-        return self.char_subclass
-    
     def set_class(self):
         if self.char_class == "barbarian":
             self.c_class = Barbarian
         elif self.char_class == "bard":
             self.c_class = Bard
+        elif self.char_class == "cleric":
+            self.c_class = Cleric
+        elif self.char_class == "druid":
+            self.c_class = Druid
+        elif self.char_class == "fighter":
+            self.c_class = Fighter
+        elif self.char_class == "monk":
+            self.c_class = Monk
+        elif self.char_class == "paladin":
+            self.c_class = Paladin
+        elif self.char_class == "rogue":
+            self.c_class = Rogue
+        elif self.char_class == "sorcerer":
+            self.c_class = Sorcerer
+        elif self.char_class == "warlock":
+            self.c_class = Warlock
+        elif self.char_class == "wizard":
+            self.c_class = Wizard
         return self.c_class
     
     def hitpoints(self):
@@ -75,8 +78,8 @@ class Classes:
                 hp_first = 12 + self._ability_mods.get("Constitution")
                 hp = hp_first + (d.roll((self.level - 1), 12)) + (self.level - 1) * (self._ability_mods.get("Constitution"))
         print(f"{self._name} has {hp} hitpoints.")
-        self.hp = hp
-        return self.hp
+        self.hp_total = hp
+        return self.hp_total
     
     def saves(self):
         if self.char_class == "barbarian":
@@ -213,7 +216,7 @@ class Barbarian:
               self.bludgeoning_resistance = True
               self.piercing_resistance = True
               self.slashing_resistance = True
-        if self.hp == 0:
+        if self.hp_current == 0:
             rage = False
         self.rage = rage
         return self.rage
@@ -343,7 +346,418 @@ class Bard:
             if self.skill_proficiencies.get(f"{skill_2}") == True:
                 self.skill_proficiencies[f"{skill_2}"] = "expertise"
         return self.skill_proficiencies
-            
+    
+    def font_of_inspiration(self):
+        pass
+    
+    def countercharm(self):
+        pass
+    
+    def magical_secrets(self):
+        pass
+    
+    def superior_inspiration(self):
+        pass
+    
+class Cleric:
+    def __init__(self):
+        self.light_armor_proficiency = True
+        self.medium_armor_proficiency = True
+        self.shield_proficiency = True
+        self.simple_weapons_proficiency = True
+        self.spellcasting = True
+        return
+    
+    def turn_undead(self):
+        pass
+    
+    def destroy_undead(self):
+        pass
+    
+    def divine_intervention(self):
+        if self.level >= 10 and self.level <= 19:
+            divine = d.roll(1, 100)
+            if divine <= self.level:
+                print("Divine intervention was successful...")
+            else:
+                print("Your deity cannot assist you...")
+        return divine
+    
+class Druid:
+    def __init__(self):
+        self.light_armor_proficiency = True
+        self.medium_armor_proficiency = True
+        self.shield_proficiency = True
+        self.club_proficiency = True
+        self.dagger_proficiency = True
+        self.darts_proficiency = True
+        self.javelin_proficiency = True
+        self.mace_proficiency = True
+        self.quarterstaff_proficiency = True
+        self.scimitar_proficiency = True
+        self.sickle_proficiency = True
+        self.sling_proficiency = True
+        self.spear_proficiency = True
+        self.herbalism_kit_proficiency = True
+        self.spellcasting = True
+        return
+    
+    def wild_shape(self):
+        self.wild_shape_uses = 2
+        max_cr = self.level/8
+        if self.level >= 2 and self.level < 4:
+            self.limitations = {"Max. CR":max_cr, "Flying Speed":0,
+                                "Swimming Speed":0}
+        elif self.level >= 4 and self.level < 8:
+            self.limitations = {"Max. CR":max_cr, "Flying Speed":0}
+        elif self.level >= 8:
+            self.limitations = {"Max. CR":max_cr}
+        return self.limitations
+    
+    def use_wild_shape(self, shape):
+        self.wild_shape_uses = self.wild_shape_uses - 1
+        return self.wild_shape_uses
+    
+    def timeless_body(self):
+        pass
+    
+    def beast_spells(self):
+        pass
+    
+    def archdruid(self):
+        if self.level == 20:
+            self.wild_shape_uses = "unlimited"
+        return self.wild_shape_uses
+    
+class Fighter:
+    def __init__(self):
+        self.light_armor_proficiency = True
+        self.medium_armor_proficiency =  True
+        self.heavy_armor_proficiency = True
+        self.simple_weapons_proficiency = True
+        self.martial_weapons_proficiency = True
+        return
+    
+    def fighting_style(self):
+        self.style = input("Choose one of the following - Archery, Defense, Dueling, Great Weapon Fighting, Protection, Two-Weapon Fighting: ")
+        return self.style
+    
+    def second_wind(self):
+        recover = d.roll(1, 10) + self.level
+        if (self.hp_current + recover) > self.hp_total:
+            self.hp_current = self.hp_total
+        else:
+            self.hp_current = self.hp_current + recover
+        return self.hp_current
+    
+    def action_surge(self):
+        pass
+    
+    def extra_attack(self):
+        pass
+    
+    def indomitable(self):
+        pass
+    
+class Monk:
+    def __init__(self):
+        self.simple_weapons_proficiency = True
+        self.shortsword_proficiency = True
+        return
+    
+    def unarmored_defense(self):
+        ac = 10 + self._ability_mods.get("Dexterity") + self._ability_mods.get("Wisdom")
+        self.ac = ac
+        return self.ac
+    
+    def martial_arts(self):
+        if self.level < 5:
+            unarmed_strike_dmg = d.roll(1, 4) + self._ability_mods.get("Dexterity")
+        elif self.level >= 5 and self.level < 11:
+            unarmed_strike_dmg = d.roll(1, 6) + self._ability_mods.get("Dexterity")
+        elif self.level >= 11 and self.level < 16:
+            unarmed_strike_dmg = d.roll(1, 8) + self._ability_mods.get("Dexterity")
+        elif self.level >= 17:
+            unarmed_strike_dmg = d.roll(1, 10) + self._ability_mods.get("Dexterity")
+        self.unarmed_strike_dmg = unarmed_strike_dmg
+        return self.unarmed_strike_dmg
+    
+    def ki(self):
+        if self.level >= 2:
+            self.ki_save_dc = 8 + self.proficiency_bonus + self._ability_mods.get("Wisdom")
+            self.ki_points = self.level
+        return self.ki_save_dc
+    
+    def flurry_of_blows(self):
+        self.ki_points = self.ki_points - 1
+        return self.ki_points
+    
+    def patient_defense(self):
+        self.ki_points = self.ki_points - 1
+        return self.ki_points
+    
+    def step_of_the_wind(self):
+        self.ki_points = self.ki_points - 1
+        return self.ki_points
+    
+    def deflect_missiles(self):
+        if self.level >= 3:
+            reduction = d.roll(1, 10) + self._ability_mods.get("Dexterity") + self.level
+        if reduction == 0:
+            self.ki_points = self.ki_points - 1
+        return reduction
+    
+    def slow_fall(self):
+        if self.level >= 4:
+            reduction = self.level * 5
+        return reduction
+    
+    def extra_attack(self):
+        pass
+    
+    def stunning_strike(self):
+        self.ki_points = self.ki_points - 1
+        return self.ki_points
+    
+    def ki_empowered_strikes(self):
+        pass
+    
+    def evasion(self):
+        if self.level >= 7:
+            if self.saving_throw >= self.spell_save_dc:
+                dmg_taken = 0
+            else:
+                dmg_taken = self.spell_dmg//2
+        self.hp_current = self.hp_current - dmg_taken
+        return self.hp_current
+
+    def stillness_of_mind(self):
+        pass
+    
+    def purity_of_body(self):
+        self.immunity_poison = True
+        self.immunity_disease = True
+        return self.immunity_poison, self.immunity_disease
+    
+    def tongue_of_sun_and_moon(self):
+        pass
+    
+    def diamond_soul(self):
+        if self.level >= 14:
+            self.save_proficiencies["Constitution"] = True
+            self.save_proficiencies["Intelligence"] = True
+            self.save_proficiencies["Wisdom"] = True
+            self.save_proficiencies["Charisma"] = True
+        return self.save_proficiencies
+    
+    def timeless_body(self):
+        pass
+    
+    def empty_body(self):
+        pass
+    
+class Paladin:
+    def __init__(self):
+        self.light_armor_proficiency = True
+        self.medium_armor_proficiency =  True
+        self.heavy_armor_proficiency = True
+        self.simple_weapons_proficiency = True
+        self.martial_weapons_proficiency = True
+        self.spellcasting = True
+        return
+    
+    def divine_sense(self):
+        pass
+    
+    def lay_on_hands(self, healing:int):
+        self.total_loh_pool = self.level * 5
+        self.current_loh_pool = self.total_loh_pool
+        self.current_loh_pool = self.current_loh_pool - healing
+        return self.current_loh_pool, self.total_loh_pool
+    
+    def fighting_style(self):
+        self.style = input("Choose one of the following - Defense, Dueling, Great Weapon Fighting, Protection")
+        return self.style
+    
+    def divine_smite(self):
+        if self.level >= 2:
+            ds_dmg_type = "radiant"
+            ds_dmg = d.roll(2, 8)
+        print(f"{ds_dmg} points of {ds_dmg_type} damage!")
+        return ds_dmg
+    
+    def divine_health(self):
+        self.immunity_disease = True
+        return self.immunity_disease
+    
+    def extra_attack(self):
+        pass
+    
+    def aura_of_protection(self):
+        pass
+    
+    def aura_of_courage(self):
+        pass
+    
+    def improved_divine_smite(self):
+        extra_dmg = d.roll(1, 8)
+        ds_dmg_type = "radiant"
+        return extra_dmg, ds_dmg_type
+    
+    def cleansing_touch(self):
+        pass
+    
+class Rogue:
+    def __init__(self):
+        self.light_armor_proficiency = True
+        self.simple_weapons_proficiency = True
+        self.hand_xbow_proficiency = True
+        self.longsword_proficiency = True
+        self.rapier_proficiency = True
+        self.shortsword_proficiency = True
+        self.thieves_tools_proficiency = True
+        return
+    
+    def expertise(self, skill_1, skill_2):
+        if self.level >= 1 and self.level < 6:
+            if self.skill_proficiencies.get(f"{skill_1}") == True:
+                self.skill_proficiencies[f"{skill_1}"] = "expertise"
+            if self.skill_proficiencies.get(f"{skill_2}") == True:
+                self.skill_proficiencies[f"{skill_2}"] = "expertise"
+        elif self.level >= 6:
+            if self.skill_proficiencies.get(f"{skill_1}") == True:
+                self.skill_proficiencies[f"{skill_1}"] = "expertise"
+            if self.skill_proficiencies.get(f"{skill_2}") == True:
+                self.skill_proficiencies[f"{skill_2}"] = "expertise"
+        return self.skill_proficiencies
+    
+    def sneak_attack(self):
+        if self.level < 3:
+            sneak_atk_dmg = d.roll(1, 6)
+        elif self.level == 3 or self.level == 4:
+            sneak_atk_dmg = d.roll(2, 6)
+        elif self.level == 5 or self.level == 6:
+            sneak_atk_dmg = d.roll(3, 6)
+        elif self.level == 7 or self.level == 8:
+            sneak_atk_dmg = d.roll(4, 6)
+        elif self.level == 9 or self.level == 10:
+            sneak_atk_dmg = d.roll(5, 6)
+        elif self.level == 11 or self.level == 12:
+            sneak_atk_dmg = d.roll(6, 6)
+        elif self.level == 13 or self.level == 14:
+            sneak_atk_dmg = d.roll(7, 6)
+        elif self.level == 15 or self.level == 16:
+            sneak_atk_dmg = d.roll(8, 6)
+        elif self.level == 17 or self.level == 18:
+            sneak_atk_dmg = d.roll(9, 6)
+        elif self.level == 19 or self.level == 20:
+            sneak_atk_dmg = d.roll(10, 6)
+        print(f"\033[1;31;47mSneak attack! {sneak_atk_dmg} points of damage!")
+        return sneak_atk_dmg
+    
+    def thieves_cant(self):
+        pass
+    
+    def cunning_action(self):
+        pass
+    
+    def uncanny_dodge(self):
+        pass
+    
+    def evasion(self):
+        if self.level >= 7:
+            if self.saving_throw >= self.spell_save_dc:
+                dmg_taken = 0
+            else:
+                dmg_taken = self.spell_dmg//2
+        self.hp_current = self.hp_current - dmg_taken
+        return self.hp_current
+    
+    def reliable_talent(self, skill):
+        pass
+    
+    def blindsense(self):
+        pass
+    
+    def slippery_mind(self):
+        if self.level >= 15:
+            self.save_proficiencies["Wisdom"] = True
+        return self.save_proficiencies
+    
+    def elusive(self):
+        pass
+    
+    def stroke_of_luck(self):
+        pass
+    
+class Sorcerer:
+    def __init__(self):
+        self.dagger_proficiency = True
+        self.darts_proficiency = True
+        self.sling_proficiency = True
+        self.quarterstaff_proficiency = True
+        self.light_xbow_proficiency = True
+        self.spellcasting = True
+        return
+    
+    def font_of_magic(self):
+        if self.level >= 2:
+            self.sorcery_points = self.level
+        # flexible_casting
+        return self.sorcery_points
+    
+    def metamagic(self):
+        metamagic = ["Careful Spell", "Distant Spell", "Empowered Spell",
+                     "Extended Spell", "Heightened Spell", "Quickened Spell", 
+                     "Subtle Spell", "Twinned Spell"]
+        if self.level >= 3 and self.level < 17:
+            choice = input(f"Choose two of the following - {metamagic}: ")
+            return choice
+        elif self.level >= 17:
+            new_choice = input(f"Choose another metamagic option - {metamagic}: ")
+            return new_choice
+        
+    def sorcerous_restoration(self):
+        pass
+    
+class Warlock:
+    def __init__(self):
+        self.light_armor_proficiency = True
+        self.simple_weapons_proficiency = True
+        self.spellcasting = True
+        return
+    
+    def eldritch_invocations(self):
+        if self.level >= 2:
+            pass
+    
+    def pact_boon(self):
+        pass
+    
+    def mystic_arcanum(self):
+        pass
+    
+    def eldritch_master(self):
+        pass
+    
+class Wizard:
+    def __init__(self):
+        self.dagger_proficiency = True
+        self.darts_proficiency = True
+        self.sling_proficiency = True
+        self.quarterstaff_proficiency = True
+        self.light_xbow_proficiency = True
+        self.spellcasting = True
+        return
+    
+    def arcane_recovery(self):
+        pass
+    
+    def spell_mastery(self):
+        pass
+    
+    def signature_spells(self):
+        pass
 
 def main():
     print("Rogues and Bards are op...")

@@ -11,6 +11,7 @@ import time as t
 from races import Race
 from subraces import Subrace
 from classes import Classes
+from subclasses import Subclasses
 
 class Player:
     def __init__(self, name):
@@ -44,8 +45,6 @@ class Character:
                                     "performance":False, "persuasion":False,
                                     "religion":False, "sleight of hand":False,
                                     "stealth":False, "survival":False}
-        self.size = "Medium"
-        self.speed = 30
         self.random = input("Generate random? Reply Y for yes or N for no. ").strip().lower()
         if "y" in self.random:
             self.random = True
@@ -68,8 +67,9 @@ class Character:
             Subrace.subrace_attributes(self)
         self.proficiency()
         self.char_class = Classes.choosing(self)
-        self.char_subclass = Classes.choosing_subclass(self)
-        self.hp = Classes.hitpoints(self)
+        self.char_subclass = Subclasses.choosing_subclass(self)
+        self.hp_total = Classes.hitpoints(self)
+        self.hp_current = self.hp_total
         Classes.set_class(self)
         Classes.saves(self)
         Classes.skills(self)
