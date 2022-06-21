@@ -45,6 +45,8 @@ class Character:
                                     "performance":False, "persuasion":False,
                                     "religion":False, "sleight of hand":False,
                                     "stealth":False, "survival":False}
+        self.size = "Medium"
+        self.speed = 30
         self.random = input("Generate random? Reply Y for yes or N for no. ").strip().lower()
         if "y" in self.random:
             self.random = True
