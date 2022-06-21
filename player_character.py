@@ -352,18 +352,22 @@ class Character:
         d12 = ["barbarian"]
         self.level = self.level + 1
         if self.char_class in d6:
-            new_hitpoints = self.hp + d.roll(1,6) + self._ability_mods.get("Constitution")
-            self.hp = new_hitpoints
+            new_hitpoints = self.hp_total + d.roll(1,6) + self._ability_mods.get("Constitution")
+            self.hp_total = new_hitpoints
+            self.hp_current = self.hp_total
         elif self.char_class in d8:
-            new_hitpoints = self.hp + d.roll(1,8) + self._ability_mods.get("Constitution")
-            self.hp = new_hitpoints
+            new_hitpoints = self.hp_total + d.roll(1,8) + self._ability_mods.get("Constitution")
+            self.hp_total = new_hitpoints
+            self.hp_current = self.hp_total
         elif self.char_class in d10:
-            new_hitpoints = self.hp + d.roll(1,10) + self._ability_mods.get("Constitution")
-            self.hp = new_hitpoints
+            new_hitpoints = self.hp_total + d.roll(1,10) + self._ability_mods.get("Constitution")
+            self.hp_total = new_hitpoints
+            self.hp_current = self.hp_total
         elif self.char_class in d12:
-            new_hitpoints = self.hp + d.roll(1,12) + self._ability_mods.get("Constitution")
-            self.hp = new_hitpoints
-        print("New hitpoint total:", self.hp)
+            new_hitpoints = self.hp_total + d.roll(1,12) + self._ability_mods.get("Constitution")
+            self.hp_total = new_hitpoints
+            self.hp_current = self.hp_total
+        print("New hitpoint total:", self.hp_total)
         return self.level
 
 def main():
