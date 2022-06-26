@@ -75,6 +75,7 @@ class Character:
         Classes.set_class(self)
         Classes.saves(self)
         Classes.skills(self)
+        Subclasses.set_subclass(self)
         return
        
     def abilities(self):
