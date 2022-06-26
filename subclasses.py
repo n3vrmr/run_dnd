@@ -383,3 +383,45 @@ class WildMagic(Sorcerer):
     def spell_bombardment(self):
         pass
     
+class TheFiend(Warlock):
+    def expanded_spell_list(self):
+        pass
+    
+    def dark_blessing(self):
+        self.hp_temp = self.level + self._ability_mods.get("Charisma")
+        return self.hp_temp
+    
+    def dark_own_luck(self):
+        pass
+    
+    def fiendish_resilience(self):
+        pass
+    
+    def hurl_through_hell(self):
+        dmg = d.roll(10, 10)
+        dmg_type = "psychic"
+        text = f"{dmg} points of {dmg_type} damage!"
+        print(text)
+        return dmg
+    
+class SchoolOfEvocation(Wizard):
+    def evocation_savant(self):
+        pass
+    
+    def sculpt_spells(self):
+        pass
+    
+    def potent_cantrip(self):
+        pass
+    
+    def empowered_evocation(self):
+        pass
+    
+    def overchannel(self):
+        pass
+    
+def main():
+    print("THE SPINNING WHEEL OF WILD MAGIC!")
+
+if __name__ == '__main__':
+    main()

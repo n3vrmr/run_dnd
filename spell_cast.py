@@ -51,3 +51,9 @@ def magic_missile(level:int):
     print(text)
     print(f"Total damage: {total_dmg}")
     return magic_missile
+
+def main():
+    print("It's me, fireball/And this heat is killer")
+
+if __name__ == '__main__':
+    main()
