@@ -22,26 +22,92 @@ class Classes:
     def set_class(self):
         if self.char_class == "barbarian":
             self.c_class = Barbarian
+            self.proficiency_light_armor = True
+            self.proficiency_medium_armor = True
+            self.proficiency_shield = True
+            self.proficiency_simple_weapons = True
+            self.proficiency_martial_weapons = True
         elif self.char_class == "bard":
             self.c_class = Bard
+            self.simple_weapons_proficiency = True
+            self.hand_xbow_proficiency = True
+            self.longsword_proficiency = True
+            self.rapier_proficiency = True
+            self.shortsword_proficiency = True
+            self.spellcasting = True
         elif self.char_class == "cleric":
             self.c_class = Cleric
+            self.proficiency_light_armor = True
+            self.proficiency_medium_armor = True
+            self.proficiency_shield = True
+            self.proficiency_simple_weapons = True
+            self.spellcasting = True
         elif self.char_class == "druid":
             self.c_class = Druid
+            self.proficiency_light_armor = True
+            self.proficiency_medium_armor = True
+            self.proficiency_shield = True
+            self.proficiency_club = True
+            self.proficiency_dagger = True
+            self.proficiency_darts = True
+            self.proficiency_javelin = True
+            self.proficiency_mace = True
+            self.proficiency_quarterstaff = True
+            self.proficiency_scimitar = True
+            self.proficiency_sickle = True
+            self.proficiency_sling = True
+            self.proficiency_spear = True
+            self.proficiency_herbalism_kit = True
+            self.spellcasting = True
         elif self.char_class == "fighter":
             self.c_class = Fighter
+            self.proficiency_light_armor = True
+            self.proficiency_medium_armor =  True
+            self.proficiency_heavy_armor = True
+            self.proficiency_simple_weapons = True
+            self.proficiency_martial_weapons = True
         elif self.char_class == "monk":
             self.c_class = Monk
+            self.proficiency_simple_weapons = True
+            self.proficiency_shortsword = True
         elif self.char_class == "paladin":
             self.c_class = Paladin
+            self.proficiency_light_armor = True
+            self.proficiency_medium_armor =  True
+            self.proficiency_heavy_armor = True
+            self.proficiency_simple_weapons = True
+            self.proficiency_martial_weapons = True
+            self.spellcasting = True
         elif self.char_class == "rogue":
             self.c_class = Rogue
+            self.proficiency_light_armor = True
+            self.proficiency_simple_weapons = True
+            self.proficiency_hand_xbow = True
+            self.longsword_proficiency = True
+            self.rapier_proficiency = True
+            self.proficiency_shortsword = True
+            self.proficiency_thieves_tools = True
         elif self.char_class == "sorcerer":
             self.c_class = Sorcerer
+            self.proficiency_dagger = True
+            self.proficiency_darts = True
+            self.proficiency_sling = True
+            self.proficiency_quarterstaff = True
+            self.proficiency_light_xbow = True
+            self.spellcasting = True
         elif self.char_class == "warlock":
             self.c_class = Warlock
+            self.proficiency_light_armor = True
+            self.proficiency_simple_weapons = True
+            self.spellcasting = True
         elif self.char_class == "wizard":
             self.c_class = Wizard
+            self.proficiency_dagger = True
+            self.proficiency_darts = True
+            self.proficiency_sling = True
+            self.proficiency_quarterstaff = True
+            self.proficiency_light_xbow = True
+            self.spellcasting = True
         return self.c_class
     
     def hitpoints(self):
@@ -177,14 +243,6 @@ class Classes:
         return self.skill_proficiencies
             
 class Barbarian:
-    def __init__(self):
-        self.light_armor_proficiency = True
-        self.medium_armor_proficiency = True
-        self.shield_proficiency = True
-        self.simple_weapons_proficiency = True
-        self.martial_weapons_proficiency = True
-        return
-        
     def rage(self):
         if self.level < 3:
             ragesp_day = 2
@@ -213,9 +271,9 @@ class Barbarian:
             if rage:
               print("You have advantage on Strength checks and saving throws. Use d.roll(2,20,True,True) and select advantage when making those rolls.")  
               print(f"When you make a melee weapon attack while raging and hit, add {rage_damage} to your total damage.")
-              self.bludgeoning_resistance = True
-              self.piercing_resistance = True
-              self.slashing_resistance = True
+              self.resistance_bludgeoning = True
+              self.resistance_piercing = True
+              self.resistance_slashing = True
         if self.hp_current == 0:
             rage = False
         self.rage = rage
@@ -284,15 +342,6 @@ class Barbarian:
         return self.ability_scores
 
 class Bard:
-    def __init__(self):
-        self.simple_weapons_proficiency = True
-        self.hand_xbow_proficiency = True
-        self.longsword_proficiency = True
-        self.rapier_proficiency = True
-        self.shortsword_proficiency = True
-        self.spellcasting = True
-        return
-    
     def bardic_inspiration(self):
         if self._ability_mods.get("Charisma") < 1:
             self.uses = 1
@@ -360,14 +409,6 @@ class Bard:
         pass
     
 class Cleric:
-    def __init__(self):
-        self.light_armor_proficiency = True
-        self.medium_armor_proficiency = True
-        self.shield_proficiency = True
-        self.simple_weapons_proficiency = True
-        self.spellcasting = True
-        return
-    
     def turn_undead(self):
         pass
     
@@ -383,25 +424,7 @@ class Cleric:
                 print("Your deity cannot assist you...")
         return divine
     
-class Druid:
-    def __init__(self):
-        self.light_armor_proficiency = True
-        self.medium_armor_proficiency = True
-        self.shield_proficiency = True
-        self.club_proficiency = True
-        self.dagger_proficiency = True
-        self.darts_proficiency = True
-        self.javelin_proficiency = True
-        self.mace_proficiency = True
-        self.quarterstaff_proficiency = True
-        self.scimitar_proficiency = True
-        self.sickle_proficiency = True
-        self.sling_proficiency = True
-        self.spear_proficiency = True
-        self.herbalism_kit_proficiency = True
-        self.spellcasting = True
-        return
-    
+class Druid:    
     def wild_shape(self):
         self.wild_shape_uses = 2
         max_cr = self.level/8
@@ -430,14 +453,6 @@ class Druid:
         return self.wild_shape_uses
     
 class Fighter:
-    def __init__(self):
-        self.light_armor_proficiency = True
-        self.medium_armor_proficiency =  True
-        self.heavy_armor_proficiency = True
-        self.simple_weapons_proficiency = True
-        self.martial_weapons_proficiency = True
-        return
-    
     def fighting_style(self):
         self.style = input("Choose one of the following - Archery, Defense, Dueling, Great Weapon Fighting, Protection, Two-Weapon Fighting: ")
         return self.style
@@ -460,11 +475,6 @@ class Fighter:
         pass
     
 class Monk:
-    def __init__(self):
-        self.simple_weapons_proficiency = True
-        self.shortsword_proficiency = True
-        return
-    
     def unarmored_defense(self):
         ac = 10 + self._ability_mods.get("Dexterity") + self._ability_mods.get("Wisdom")
         self.ac = ac
@@ -557,15 +567,6 @@ class Monk:
         pass
     
 class Paladin:
-    def __init__(self):
-        self.light_armor_proficiency = True
-        self.medium_armor_proficiency =  True
-        self.heavy_armor_proficiency = True
-        self.simple_weapons_proficiency = True
-        self.martial_weapons_proficiency = True
-        self.spellcasting = True
-        return
-    
     def divine_sense(self):
         pass
     
@@ -608,16 +609,6 @@ class Paladin:
         pass
     
 class Rogue:
-    def __init__(self):
-        self.light_armor_proficiency = True
-        self.simple_weapons_proficiency = True
-        self.hand_xbow_proficiency = True
-        self.longsword_proficiency = True
-        self.rapier_proficiency = True
-        self.shortsword_proficiency = True
-        self.thieves_tools_proficiency = True
-        return
-    
     def expertise(self, skill_1, skill_2):
         if self.level >= 1 and self.level < 6:
             if self.skill_proficiencies.get(f"{skill_1}") == True:
@@ -691,15 +682,6 @@ class Rogue:
         pass
     
 class Sorcerer:
-    def __init__(self):
-        self.dagger_proficiency = True
-        self.darts_proficiency = True
-        self.sling_proficiency = True
-        self.quarterstaff_proficiency = True
-        self.light_xbow_proficiency = True
-        self.spellcasting = True
-        return
-    
     def font_of_magic(self):
         if self.level >= 2:
             self.sorcery_points = self.level
@@ -721,12 +703,6 @@ class Sorcerer:
         pass
     
 class Warlock:
-    def __init__(self):
-        self.light_armor_proficiency = True
-        self.simple_weapons_proficiency = True
-        self.spellcasting = True
-        return
-    
     def eldritch_invocations(self):
         if self.level >= 2:
             pass
@@ -741,15 +717,6 @@ class Warlock:
         pass
     
 class Wizard:
-    def __init__(self):
-        self.dagger_proficiency = True
-        self.darts_proficiency = True
-        self.sling_proficiency = True
-        self.quarterstaff_proficiency = True
-        self.light_xbow_proficiency = True
-        self.spellcasting = True
-        return
-    
     def arcane_recovery(self):
         pass
     

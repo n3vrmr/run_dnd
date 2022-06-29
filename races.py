@@ -80,8 +80,11 @@ class Race:
         if self.race == "dwarf":
             Dwarf.darkvision(self)
             Dwarf.speed(self)
-            Dwarf.dwarven_combat_training(self)
-            Dwarf.dwarven_resilience(self)
+            self.resistance_poison = True
+            self.proficiency_battleaxe = True
+            self.proficiency_handaxe = True
+            self.proficiency_light_hammer = True
+            self.proficiency_warhammer = True
         elif self.race == "elf":
             Elf.darkvision(self)
             Elf.keen_senses(self)
@@ -114,10 +117,11 @@ class Race:
             HalfOrc.menacing(self)
         elif self.race == "tiefling":
             Tiefling.darkvision(self)
-            Tiefling.hellish_resistance(self)
+            self.resistance_fire = True
             Tiefling.infernal_legacy(self)
         elif self.race == "aasimar":
-            Aasimar.celestial_resistance(self)
+            self.resistance_necrotic = True
+            self.resistance_radiant = True
             Aasimar.darkvision(self)
             Aasimar.healing_hands(self)
             Aasimar.light_bearer(self)
@@ -156,7 +160,7 @@ class Race:
         self.languages = languages
         return self.languages
             
-class Dwarf:
+class Dwarf:    
     def speed(self):
         speed = 25
         self.speed = speed
@@ -171,29 +175,6 @@ class Dwarf:
         darkvision = [True,60]
         self.darkvision = darkvision
         return self.darkvision
-    
-    def dwarven_resilience(self):
-        poison_resistance = True
-        self.poison_resistance = poison_resistance
-        poison_save_adv = True
-        self.poison_save_adv = poison_save_adv
-        dwarven_resilience = [self.poison_resistance,self.poison_save_adv]
-        self.dwarven_resilience = dwarven_resilience
-        return self.dwarven_resilience
-    
-    def dwarven_combat_training(self):
-        battleaxe_proficiency = True
-        self.battleaxe_proficiency = battleaxe_proficiency
-        handaxe_proficiency = True
-        self.handaxe_proficiency = handaxe_proficiency
-        light_hammer_proficiency = True
-        self.light_hammer_proficiency = light_hammer_proficiency
-        warhammer_proficiency = True
-        self.warhammer_proficiency = warhammer_proficiency
-        dwarven_combat_training = [self.battleaxe_proficiency,self.handaxe_proficiency,
-                                   self.light_hammer_proficiency,self.warhammer_proficiency]
-        self.dwarven_combat_training = dwarven_combat_training
-        return self.dwarven_combat_training
     
     def tool_proficiency(self):
         tool = input("Choose proficiency in one of the following artisan's tools: smith's tools, brewer's supplies, or mason's tools.")

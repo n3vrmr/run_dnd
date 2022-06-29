@@ -12,6 +12,12 @@ from races import Race
 from subraces import Subrace
 from classes import Classes
 from subclasses import Subclasses
+from weapons import Club, Dagger, Greatclub, Handaxe, Javelin, LightHammer
+from weapons import Mace, Quarterstaff, Sickle, Spear, LightCrossbow, Dart
+from weapons import Shortbow, Sling, Battleaxe, Flail, Glaive, Greataxe
+from weapons import Greatsword, Halberd, Lance, Longsword, Maul, Morningstar
+from weapons import Pike, Rapier, Scimitar, Shortsword, Trident, WarPick
+from weapons import Warhammer, Whip, Blowgun, HandCrossbow, HeavyCrossbow, Longbow
 
 class Player:
     def __init__(self, name):
@@ -76,6 +82,8 @@ class Character:
         Classes.saves(self)
         Classes.skills(self)
         Subclasses.set_subclass(self)
+        self.inventory = []
+        self.convert_weapon_proficiency()
         return
        
     def abilities(self):
@@ -372,6 +380,589 @@ class Character:
             self.hp_current = self.hp_total
         print("New hitpoint total:", self.hp_total)
         return self.level
+    
+    def convert_weapon_proficiency(self):
+        if self.proficiency_simple_weapons == True:
+            self.proficiency_club = True
+            self.proficiency_dagger = True
+            self.proficiency_greatclub = True
+            self.proficiency_handaxe = True
+            self.proficiency_javelin = True
+            self.proficiency_light_hammer = True
+            self.proficiency_mace = True
+            self.proficiency_quarterstaff = True
+            self.proficiency_sickle = True
+            self.proficiency_spear = True
+            self.proficiency_light_xbow = True
+            self.proficiency_darts = True
+            self.proficiency_shortbow = True
+            self.proficiency_sling = True
+        if self.proficiency_martial_weapons == True:
+            self.proficiency_battleaxe = True
+            self.proficiency_flail = True
+            self.proficiency_glaive = True
+            self.proficiency_greataxe = True
+            self.proficiency_greatsword = True
+            self.proficiency_halberd = True
+            self.proficiency_lance = True
+            self.proficiency_longsword = True
+            self.proficiency_maul = True
+            self.proficiency_morningstar = True
+            self.proficiency_pike = True
+            self.proficiency_rapier = True
+            self.proficiency_scimitar = True
+            self.proficiency_shortsword = True
+            self.proficiency_trident = True
+            self.proficiency_war_pick = True
+            self.proficiency_warhammer = True
+            self.proficiency_whip = True
+            self.proficiency_blowgun = True
+            self.proficiency_hand_xbow = True
+            self.proficiency_heavy_xbow = True
+            self.proficiency_longbow = True
+        return
+            
+
+    def add_item(self, item):
+        if item == "Club":
+            weapon = Club()
+            self.inventory.append(weapon)
+        elif item == "Dagger":
+            weapon = Dagger()
+            self.inventory.append(weapon)
+        elif item == "Greatclub":
+            weapon = Greatclub()
+            self.inventory.append(weapon)
+        elif item == "Handaxe":
+            weapon = Handaxe()
+            self.inventory.append(weapon)
+        elif item == "Javelin":
+            weapon = Javelin()
+            self.inventory.append(weapon)
+        elif item == "Light hammer":
+            weapon = LightHammer()
+            self.inventory.append(weapon)
+        elif item == "Mace":
+            weapon = Mace()
+            self.inventory.append(weapon)
+        elif item == "Quarterstaff":
+            weapon = Quarterstaff()
+            self.inventory.append(weapon)
+        elif item == "Sickle":
+            weapon = Sickle()
+            self.inventory.append(weapon)
+        elif item == "Spear":
+            weapon = Spear()
+            self.inventory.append(weapon)
+        elif item == "Light crossbow":
+            weapon = LightCrossbow()
+            self.inventory.append(weapon)
+        elif item == "Dart":
+            weapon = Dart()
+            self.inventory.append(weapon)
+        elif item == "Shortbow":
+            weapon = Shortbow()
+            self.inventory.append(weapon)
+        elif item == "Sling":
+            weapon = Sling()
+            self.inventory.append(weapon)
+        elif item == "Battleaxe":
+            weapon = Battleaxe()
+            self.inventory.append(weapon)
+        elif item == "Flail":
+            weapon = Flail()
+            self.inventory.append(weapon)
+        elif item == "Glaive":
+            weapon = Glaive()
+            self.inventory.append(weapon)
+        elif item == "Greataxe":
+            weapon = Greataxe()
+            self.inventory.append(weapon)
+        elif item == "Greatsword":
+            weapon = Greatsword()
+            self.inventory.append(weapon)
+        elif item == "Halberd":
+            weapon = Halberd()
+            self.inventory.append(weapon)
+        elif item == "Lance":
+            weapon = Lance()
+            self.inventory.append(weapon)
+        elif item == "Longsword":
+            weapon = Longsword()
+            self.inventory.append(weapon)
+        elif item == "Maul":
+            weapon = Maul()
+            self.inventory.append(weapon)
+        elif item == "Morningstar":
+            weapon = Morningstar()
+            self.inventory.append(weapon)
+        elif item == "Pike":
+            weapon = Pike()
+            self.inventory.append(weapon)
+        elif item == "Rapier":
+            weapon = Rapier()
+            self.inventory.append(weapon)
+        elif item == "Scimitar":
+            weapon = Scimitar()
+            self.inventory.append(weapon)
+        elif item == "Shortsword":
+            weapon = Shortsword()
+            self.inventory.append(weapon)
+        elif item == "Trident":
+            weapon = Trident()
+            self.inventory.append(weapon)
+        elif item == "War pick":
+            weapon = WarPick()
+            self.inventory.append(weapon)
+        elif item == "Warhammer":
+            weapon = Warhammer()
+            self.inventory.append(weapon)
+        elif item == "Whip":
+            weapon = Whip()
+            self.inventory.append(weapon)
+        elif item == "Blowgun":
+            weapon = Blowgun()
+            self.inventory.append(weapon)
+        elif item == "Hand crossbow":
+            weapon = HandCrossbow()
+            self.inventory.append(weapon)
+        elif item == "Heavy crossbow":
+            weapon = HeavyCrossbow()
+            self.inventory.append(weapon)
+        elif item == "Longbow":
+            weapon = Longbow()
+            self.inventory.append(weapon)
+        return self.inventory
+    
+    def attack_roll(self, weapon):
+        if weapon == "Club":
+            if self.proficiency_club == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Dagger":
+            if self.proficiency_dagger == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Greatclub":
+            if self.proficiency_greatclub == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Handaxe":
+            if self.proficiency_handaxe == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Javelin":
+            if self.proficiency_javelin == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Light hammer":
+            if self.proficiency_light_hammer == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Mace":
+            if self.proficiency_mace == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Quarterstaff":
+            if self.proficiency_quarterstaff == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Sickle":
+            if self.proficiency_sickle == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Spear":
+            if self.proficiency_spear == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Light crossbow":
+            if self.proficiency_light_xbow == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Dart":
+            if self.proficiency_darts == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Shortbow":
+            if self.proficiency_shortbow == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Sling":
+            if self.proficiency_sling == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Battleaxe":
+            if self.proficiency_battleaxe == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Flail":
+            if self.proficiency_flail == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Glaive":
+            if self.proficiency_glaive == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Greataxe":
+            if self.proficiency_greataxe == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Greatsword":
+            if self.proficiency_greatsword == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Halberd":
+            if self.proficiency_halberd == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Lance":
+            if self.proficiency_lance == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Longsword":
+            if self.proficiency_longsword == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Maul":
+            if self.proficiency_maul == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Morningstar":
+            if self.proficiency_morningstar == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Pike":
+            if self.proficiency_pike == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Rapier":
+            if self.proficiency_rapier == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Scimitar":
+            if self.proficiency_scimitar == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Shortsword":
+            if self.proficiency_shortsword == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Trident":
+            if self.proficiency_trident == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "War pick":
+            if self.proficiency_war_pick == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Warhammer":
+            if self.proficiency_warhammer == True or self.proficiency_martial_weapons == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Strength")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Whip":
+            if self.proficiency_whip == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Blowgun":
+            if self.proficiency_blowgun == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Hand crossbow":
+            if self.proficiency_hand_xbow == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Heavy crossbow":
+            if self.proficiency_heavy_xbow == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        elif weapon == "Longbow":
+            if self.proficiency_longbow == True:
+                roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity") + self.proficiency_bonus
+            else:
+               roll = d.roll(2, 20, True, True) + self._ability_mods.get("Dexterity")
+            print("Total:",roll)
+            return roll
+        
+    def damage_roll(self, weapon):
+        if weapon == "Club":
+            dmg = d.roll(1, 4) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Dagger":
+            dmg = d.roll(1, 4) + self._ability_mods.get("Dexterity")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Greatclub":
+            dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Handaxe":
+            dmg = d.roll(1, 6) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Javelin":
+            dmg = d.roll(1, 6) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Light hammer":
+            dmg = d.roll(1, 4) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Mace":
+            dmg = d.roll(1, 6) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Quarterstaff":
+            hands = input("One or two hands? ")
+            if 1 in hands or "one" in hands:
+                dmg = d.roll(1, 6) + self._ability_mods.get("Dexterity")
+                print("Total:",dmg)
+            elif 2 in hands or "two" in hands:
+                dmg = d.roll(1, 8) + self._ability_mods.get("Dexterity")
+                print("Total:",dmg)
+            return dmg
+        elif weapon == "Sickle":
+            dmg = d.roll(1, 4) + self._ability_mods.get("Dexterity")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Spear":
+            hands = input("One or two hands? ")
+            if 1 in hands or "one" in hands:
+                dmg = d.roll(1, 6) + self._ability_mods.get("Strength")
+                print("Total:",dmg)
+            elif 2 in hands or "two" in hands:
+                dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
+                print("Total:",dmg)
+            return dmg
+        elif weapon == "Light crossbow":
+            dmg = d.roll(1, 8) + self._ability_mods.get("Dexterity")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Dart":
+            dmg = d.roll(1, 4) + self._ability_mods.get("Dexterity")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Shortbow":
+            dmg = d.roll(1, 8) + self._ability_mods.get("Dexterity")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Sling":
+            dmg = d.roll(1, 4) + self._ability_mods.get("Dexterity")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Battleaxe":
+            hands = input("One or two hands? ")
+            if 1 in hands or "one" in hands:
+                dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
+                print("Total:",dmg)
+            elif 2 in hands or "two" in hands:
+                dmg = d.roll(1, 10) + self._ability_mods.get("Strength")
+                print("Total:",dmg)
+            return dmg
+        elif weapon == "Flail":
+            dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Glaive":
+            dmg = d.roll(1, 10) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Greataxe":
+            dmg = d.roll(1, 12) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Greatsword":
+            dmg = d.roll(2, 6) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Halberd":
+            dmg = d.roll(1, 10) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Lance":
+            dmg = d.roll(1, 12) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Longsword":
+            hands = input("One or two hands? ")
+            if 1 in hands or "one" in hands:
+                dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
+                print("Total:",dmg)
+            elif 2 in hands or "two" in hands:
+                dmg = d.roll(1, 10) + self._ability_mods.get("Strength")
+                print("Total:",dmg)
+            return dmg
+        elif weapon == "Maul":
+            dmg = d.roll(2, 6) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Morningstar":
+            dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Pike":
+            dmg = d.roll(1, 10) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Rapier":
+            dmg = d.roll(1, 8) + self._ability_mods.get("Dexterity")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Scimitar":
+            dmg = d.roll(1, 6) + self._ability_mods.get("Dexterity")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Shortsword":
+            dmg = d.roll(1, 6) + self._ability_mods.get("Dexterity")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Trident":
+            hands = input("One or two hands? ")
+            if 1 in hands or "one" in hands:
+                dmg = d.roll(1, 6) + self._ability_mods.get("Strength")
+                print("Total:",dmg)
+            elif 2 in hands or "two" in hands:
+                dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
+                print("Total:",dmg)
+            return dmg
+        elif weapon == "War pick":
+            dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Warhammer":
+            hands = input("One or two hands? ")
+            if 1 in hands or "one" in hands:
+                dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
+                print("Total:",dmg)
+            elif 2 in hands or "two" in hands:
+                dmg = d.roll(1, 10) + self._ability_mods.get("Strength")
+                print("Total:",dmg)
+            return dmg
+        elif weapon == "Whip":
+            dmg = d.roll(1, 4) + self._ability_mods.get("Dexterity")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Blowgun":
+            dmg = 1
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Hand crossbow":
+            dmg = d.roll(1, 6) + self._ability_mods.get("Dexterity")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Heavy crossbow":
+            dmg = d.roll(1, 10) + self._ability_mods.get("Dexterity")
+            print("Total:",dmg)
+            return dmg
+        elif weapon == "Longbow":
+            dmg = d.roll(1, 8) + self._ability_mods.get("Dexterity")
+            print("Total:",dmg)
+            return dmg
 
 def main():
     print("Is it thursday yet?")

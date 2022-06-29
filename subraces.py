@@ -75,20 +75,29 @@ class Subrace:
         if self.subrace == "hill dwarf":
             HillDwarf.dwarven_toughness(self)
         elif self.subrace == "mountain dwarf":
-            MountainDwarf.dwarven_armor_training(self)
+            self.proficiency_light_armor = True
+            self.proficiency_medium_armor = True
         elif self.subrace == "high elf":
             HighElf.extra_language(self)
-            HighElf.elf_weapon_training(self)
+            self.proficiency_longsword = True
+            self.proficiency_shortsword = True
+            self.proficiency_shortbow = True
+            self.proficiency_longbow = True
             HighElf.cantrip(self)
         elif self.subrace == "wood elf":
             WoodElf.fleet_of_foot(self)
-            WoodElf.elf_weapon_training(self)
+            self.proficiency_longsword = True
+            self.proficiency_shortsword = True
+            self.proficiency_shortbow = True
+            self.proficiency_longbow = True
             WoodElf.mask_of_the_wild(self)
             WoodElf.speed(self)
         elif self.subrace == "drow":
             Drow.superior_darkvision(self)
             Drow.sunlight_sensitivity(self)
-            Drow.drow_weapon_training(self)
+            self.proficiency_rapier = True
+            self.proficiency_shortsword = True
+            self.proficiency_hand_xbow = True
             Drow.drow_magic(self)
         elif self.subrace == "lightfoot":
             Lightfoot.naturally_stealthy(self)
@@ -123,36 +132,12 @@ class HillDwarf(Dwarf):
         return self.ability_scores
             
 class MountainDwarf(Dwarf):
-    def dwarven_armor_training(self):
-        light_armor_proficiency = True
-        self.light_armor_proficiency = light_armor_proficiency
-        medium_armor_proficiency = True
-        self.medium_armor_proficiency = medium_armor_proficiency
-        dwarven_armor_training = [self.light_armor_proficiency,
-                                  self.medium_armor_proficiency]
-        self.dwarven_armor_training = dwarven_armor_training
-        return self.dwarven_armor_training
-    
     def mdwarf_asi(self):
         if self.subrace == "mountain dwarf":
             self.ability_scores["Strength"] = self.ability_scores.get("Strength") + 2
         return self.ability_scores
     
-class HighElf(Elf):    
-    def elf_weapon_training(self):
-        longsword_proficiency = True
-        self.longsword_proficiency =longsword_proficiency
-        shortsword_proficiency = True
-        self.shortsword_proficiency = shortsword_proficiency
-        shortbow_proficiency = True
-        self.shortbow_proficiency = shortbow_proficiency
-        longbow_proficiency = True
-        self.longbow_proficiency = longbow_proficiency
-        elf_weapon_training = [self.longsword_proficiency, self.shortsword_proficiency,
-                               self.shortbow_proficiency, self.longbow_proficiency]
-        self.elf_weapon_training = elf_weapon_training
-        return self.elf_weapon_training
-    
+class HighElf(Elf):
     def cantrip(self):
         cantrip = True
         self.cantrip = cantrip
@@ -176,11 +161,6 @@ class WoodElf(Elf):
         self.fleet_of_foot()
         self.mask_of_the_wild = True
         return
-    
-    def elf_weapon_training(self):
-        elf_weapon_training = True
-        self.elf_weapon_training = elf_weapon_training
-        return self.elf_weapon_training
     
     def fleet_of_foot(self):
         speed = 35
@@ -213,11 +193,6 @@ class Drow(Elf):
         self.drow_magic = drow_magic
         return self.drow_magic
     
-    def drow_weapon_training(self):
-        drow_weapon_training = True
-        self.drow_weapon_training = drow_weapon_training
-        return self.drow_weapon_training
-    
     def drow_asi(self):
         if self.subrace == "drow":
             self.ability_scores["Charisma"] = self.ability_scores.get("Charisma") + 1
@@ -234,13 +209,8 @@ class Lightfoot(Halfling):
     
 class Stout(Halfling):
     def stout_resilience(self):
-        poison_resistance = True
-        self.poison_resistance = poison_resistance
-        poison_save_adv = True
-        self.poison_save_adv = poison_save_adv
-        stout_resilience = [self.poison_resistance, self.poison_save_adv]
-        self.stout_resilience = stout_resilience
-        return self.stout_resilience
+        self.poison_resistance = True
+        return
     
     def stout_asi(self):
         if self.subrace == "stout":
@@ -267,9 +237,8 @@ class SilverDragonborn(Dragonborn):
         return [self.bw_save_type, self.bw_save_dc, self.bw_area, self.bw_damage]
     
     def resistance(self):
-        cold_resistance = True
-        self.cold_resistance = cold_resistance
-        return self.cold_resistance
+        self.resistance_cold = True
+        return self.resistance_cold
 
 class ForestGnome(Gnome):
     def natural_illusionist(self):
