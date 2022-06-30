@@ -16,11 +16,11 @@ class Subclasses:
         level_2 = ["druid", "wizard"]
         level_3 = ["barbarian", "bard", "fighter", "monk", "paladin", "rogue"]
         if self.char_class in level_1 and self.level >= 1:
-            char_subclass = input("Choose your subclass: ")
+            char_subclass = input("Choose your subclass: ").strip().lower()
         elif self.char_class in level_2 and self.level >= 2:
-            char_subclass = input("Choose your subclass: ")
+            char_subclass = input("Choose your subclass: ").strip().lower()
         elif self.char_class in level_3 and self.level >= 3:
-            char_subclass = input("Choose your subclass: ")
+            char_subclass = input("Choose your subclass: ").strip().lower()
         else:
             char_subclass = False
         self.char_subclass = char_subclass
@@ -45,6 +45,10 @@ class Subclasses:
             self.c_subclass = Assassin
         elif "wild magic" in self.char_subclass:
             self.c_subclass = WildMagic
+        elif "fiend" in self.char_subclass:
+            self.c_subclass = TheFiend
+        elif "evocation" in self.char_subclass:
+            self.c_subclass = SchoolOfEvocation
         return self.c_subclass
 
 class PathOfTheBerserker(Barbarian):

@@ -36,6 +36,14 @@ class Campaign:
         for i in range(0,len(self.players)):
             print(f"{self.players[i].name} has joined the campaign as {self.players[i].character._name}, a {self.players[i].character.race} {self.players[i].character.char_class}!")
         return self.players
+    
+    def set_characters(self, name, i):
+        name = self.players[i].character
+        return name
+    
+    def get_character_name(self, i):
+        char_name = self.players[i].character._name
+        return char_name
             
             # else:
             #     t.sleep(1.2)
@@ -47,6 +55,9 @@ class Campaign:
         pass
 
 c = Campaign()
+# for player in c.players:
+#     character = c.get_character_name(i)
+#      = c.set_characters(f"{c.players[i].character._name}", i)
 
 def main():
     print("Not affiliated with Wizards of the Coast LLC")

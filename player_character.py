@@ -51,6 +51,7 @@ class Character:
                                     "performance":False, "persuasion":False,
                                     "religion":False, "sleight of hand":False,
                                     "stealth":False, "survival":False}
+        self.set_weapon_proficiencies()
         self.size = "Medium"
         self.speed = 30
         self.random = input("Generate random? Reply Y for yes or N for no. ").strip().lower()
@@ -380,6 +381,47 @@ class Character:
             self.hp_current = self.hp_total
         print("New hitpoint total:", self.hp_total)
         return self.level
+    
+    def set_weapon_proficiencies(self):
+        self.proficiency_simple_weapons = False
+        self.proficiency_club = False
+        self.proficiency_dagger = False
+        self.proficiency_greatclub = False
+        self.proficiency_handaxe = False
+        self.proficiency_javelin = False
+        self.proficiency_light_hammer = False
+        self.proficiency_mace = False
+        self.proficiency_quarterstaff = False
+        self.proficiency_sickle = False
+        self.proficiency_spear = False
+        self.proficiency_light_xbow = False
+        self.proficiency_darts = False
+        self.proficiency_shortbow = False
+        self.proficiency_sling = False
+        self.proficiency_martial_weapons = False
+        self.proficiency_battleaxe = False
+        self.proficiency_flail = False
+        self.proficiency_glaive = False
+        self.proficiency_greataxe = False
+        self.proficiency_greatsword = False
+        self.proficiency_halberd = False
+        self.proficiency_lance = False
+        self.proficiency_longsword = False
+        self.proficiency_maul = False
+        self.proficiency_morningstar = False
+        self.proficiency_pike = False
+        self.proficiency_rapier = False
+        self.proficiency_scimitar = False
+        self.proficiency_shortsword = False
+        self.proficiency_trident = False
+        self.proficiency_war_pick = False
+        self.proficiency_warhammer = False
+        self.proficiency_whip = False
+        self.proficiency_blowgun = False
+        self.proficiency_hand_xbow = False
+        self.proficiency_heavy_xbow = False
+        self.proficiency_longbow = False
+        return
     
     def convert_weapon_proficiency(self):
         if self.proficiency_simple_weapons == True:
@@ -819,10 +861,10 @@ class Character:
             return dmg
         elif weapon == "Quarterstaff":
             hands = input("One or two hands? ")
-            if 1 in hands or "one" in hands:
+            if "1" in hands or "one" in hands:
                 dmg = d.roll(1, 6) + self._ability_mods.get("Dexterity")
                 print("Total:",dmg)
-            elif 2 in hands or "two" in hands:
+            elif "2" in hands or "two" in hands:
                 dmg = d.roll(1, 8) + self._ability_mods.get("Dexterity")
                 print("Total:",dmg)
             return dmg
@@ -832,10 +874,10 @@ class Character:
             return dmg
         elif weapon == "Spear":
             hands = input("One or two hands? ")
-            if 1 in hands or "one" in hands:
+            if "1" in hands or "one" in hands:
                 dmg = d.roll(1, 6) + self._ability_mods.get("Strength")
                 print("Total:",dmg)
-            elif 2 in hands or "two" in hands:
+            elif "2" in hands or "two" in hands:
                 dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
                 print("Total:",dmg)
             return dmg
@@ -857,10 +899,10 @@ class Character:
             return dmg
         elif weapon == "Battleaxe":
             hands = input("One or two hands? ")
-            if 1 in hands or "one" in hands:
+            if "1" in hands or "one" in hands:
                 dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
                 print("Total:",dmg)
-            elif 2 in hands or "two" in hands:
+            elif "2" in hands or "two" in hands:
                 dmg = d.roll(1, 10) + self._ability_mods.get("Strength")
                 print("Total:",dmg)
             return dmg
@@ -890,10 +932,10 @@ class Character:
             return dmg
         elif weapon == "Longsword":
             hands = input("One or two hands? ")
-            if 1 in hands or "one" in hands:
+            if "1" in hands or "one" in hands:
                 dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
                 print("Total:",dmg)
-            elif 2 in hands or "two" in hands:
+            elif "2" in hands or "two" in hands:
                 dmg = d.roll(1, 10) + self._ability_mods.get("Strength")
                 print("Total:",dmg)
             return dmg
@@ -923,10 +965,10 @@ class Character:
             return dmg
         elif weapon == "Trident":
             hands = input("One or two hands? ")
-            if 1 in hands or "one" in hands:
+            if "1" in hands or "one" in hands:
                 dmg = d.roll(1, 6) + self._ability_mods.get("Strength")
                 print("Total:",dmg)
-            elif 2 in hands or "two" in hands:
+            elif "2" in hands or "two" in hands:
                 dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
                 print("Total:",dmg)
             return dmg
@@ -936,10 +978,10 @@ class Character:
             return dmg
         elif weapon == "Warhammer":
             hands = input("One or two hands? ")
-            if 1 in hands or "one" in hands:
+            if "1" in hands or "one" in hands:
                 dmg = d.roll(1, 8) + self._ability_mods.get("Strength")
                 print("Total:",dmg)
-            elif 2 in hands or "two" in hands:
+            elif "2" in hands or "two" in hands:
                 dmg = d.roll(1, 10) + self._ability_mods.get("Strength")
                 print("Total:",dmg)
             return dmg
