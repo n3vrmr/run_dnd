@@ -22,7 +22,7 @@ class Subclasses:
         elif self.char_class in level_3 and self.level >= 3:
             char_subclass = input("Choose your subclass: ").strip().lower()
         else:
-            char_subclass = False
+            char_subclass = "None"
         self.char_subclass = char_subclass
         return self.char_subclass
     
@@ -49,6 +49,8 @@ class Subclasses:
             self.c_subclass = TheFiend
         elif "evocation" in self.char_subclass:
             self.c_subclass = SchoolOfEvocation
+        else:
+            return self.char_subclass
         return self.c_subclass
 
 class PathOfTheBerserker(Barbarian):

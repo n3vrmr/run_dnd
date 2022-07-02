@@ -35,6 +35,7 @@ class Campaign:
                 add = False
         for i in range(0,len(self.players)):
             print(f"{self.players[i].name} has joined the campaign as {self.players[i].character._name}, a {self.players[i].character.race} {self.players[i].character.char_class}!")
+            globals()[f'{self.players[i].character._name}'] = self.players[i].character
         return self.players
     
     def set_characters(self, name, i):
