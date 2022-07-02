@@ -85,6 +85,10 @@ class Character:
         Subclasses.set_subclass(self)
         self.inventory = []
         self.convert_weapon_proficiency()
+        if self.skill_proficiencies.get("perception") == True:
+            self.passive_perception = 10 + self.proficiency_bonus + self._ability_mods.get("Wisdom")
+        else:
+            self.passive_perception = 10 + self._ability_mods.get("Wisdom")
         return
        
     def abilities(self):
