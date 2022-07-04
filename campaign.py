@@ -5,6 +5,8 @@ Created on Wed May  4 18:45:16 2022
 @author: Nevermore
 """
 
+from IPython.display import display
+import pandas as pd
 import time as t
 from player_character import Player
 from dungeon_master import DungeonMaster
@@ -38,27 +40,32 @@ class Campaign:
             globals()[f'{self.players[i].character._name}'] = self.players[i].character
         return self.players
     
-    def set_characters(self, name, i):
-        name = self.players[i].character
-        return name
+    def create_initiative(self):
+        self.initiative_values = []
+        self.characters = []
+        for i in range(0,len(self.players)):
+            name = self.players[i].character._name
+            print(f"Initiative for {name}")
+            value = self.players[i].character.initiative()
+            self.initiative_values.append(value)
+            self.characters.append(name)
+        open_initiative = pd.DataFrame({"Character":self.characters,
+                                        "Initiative":self.initiative_values})
+        self.initiative = open_initiative.sort_values("Initiative", ascending=False)
+        display(self.initiative)
+        return
+    
+    def initiative_add_monsters(self):
+        pass            
     
     def get_character_name(self, i):
         char_name = self.players[i].character._name
         return char_name
-            
-            # else:
-            #     t.sleep(1.2)
-            #     print("Players, create your characters: ")
-            #     t.sleep(1.2)
-            #     Player.create_character(self)
     
     def player_characters(self):
         pass
 
 c = Campaign()
-# for player in c.players:
-#     character = c.get_character_name(i)
-#      = c.set_characters(f"{c.players[i].character._name}", i)
 
 def main():
     print("Not affiliated with Wizards of the Coast LLC")

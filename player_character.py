@@ -467,7 +467,6 @@ class Character:
             self.proficiency_heavy_xbow = True
             self.proficiency_longbow = True
         return
-            
 
     def add_item(self, item):
         if item == "Club":
@@ -579,6 +578,10 @@ class Character:
             weapon = Longbow()
             self.inventory.append(weapon)
         return self.inventory
+    
+    def initiative(self):
+        initiative = d.roll(1, 20) + self._ability_mods.get("Dexterity")
+        return initiative
     
     def attack_roll(self, weapon):
         if weapon == "Club":
