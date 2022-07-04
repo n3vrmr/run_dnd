@@ -467,3 +467,9 @@ class Longbow(Weapon):
     def damage(self):
         dmg = d.roll(1, 8) + self._ability_mods.get("Dexterity")
         return dmg
+
+def main():
+    print("Dagger, dagger, dagger")
+    
+if __name__ == '__main__':
+    main()
