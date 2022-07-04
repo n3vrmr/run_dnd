@@ -10,6 +10,7 @@ import pandas as pd
 import time as t
 from player_character import Player
 from dungeon_master import DungeonMaster
+from monster import Beholder
 
 class Campaign:
     def __init__(self):
@@ -55,15 +56,32 @@ class Campaign:
         display(self.initiative)
         return
     
-    def initiative_add_monsters(self):
-        pass            
+    def initiative_add_monsters(self, monster):
+        print(f"Initiative for {monster}")
+        if monster == "Beholder":
+            self.beholder = Beholder()
+            monster_initiative = self.beholder.initiative()
+            add_to_initiative = pd.DataFrame({"Character":"Beholder",
+                                              "Initiative":monster_initiative}, index=[0])
+        concat = pd.concat([self.initiative, add_to_initiative], ignore_index=True)
+        ordered = concat.sort_values("Initiative", ascending=False)
+        self.initiative = ordered
+        display(self.initiative)
+        return
     
+    def start_combat(self):
+        self.combat = True
+        while self.combat:
+            for character in self.initiative["Character"]:
+                print(f"{character}'s turn \n")
+                ask = input(f"{character}, what would you like to do?\n")
+                if ask == "End.":
+                    break
+                    self.combat = False
+        
     def get_character_name(self, i):
         char_name = self.players[i].character._name
         return char_name
-    
-    def player_characters(self):
-        pass
 
 c = Campaign()
 

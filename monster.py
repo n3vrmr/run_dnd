@@ -13,7 +13,7 @@ class Monster:
         self.kind = kind
         return
     
-class Beholder():
+class Beholder(Monster):
     def __init__(self, ac=18, hp=180, speed_fly=20):
         self.ac = ac
         self._hp_total = hp
@@ -106,6 +106,10 @@ class Beholder():
                 dmg_type = "necrotic"
                 print(f"Death Ray, make a Dexterity save! Fail takes {dmg} points of {dmg_type} damage, {dmg//2} damage on success. (DC {self.save_dc})")
         return rays
+    
+    def initiative(self):
+        initiative = d.roll(1, 20) + self._ability_mods.get("Dexterity")
+        return initiative
     
 beholder = Beholder()
 
