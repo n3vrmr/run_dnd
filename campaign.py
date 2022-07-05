@@ -76,14 +76,14 @@ class Campaign:
                 print(f"{character}'s turn \n")
                 ask = input(f"{character}, what would you like to do?\n")
                 if ask == "End.":
-                    break
                     self.combat = False
+                    break
         
     def get_character_name(self, i):
         char_name = self.players[i].character._name
         return char_name
 
-c = Campaign()
+# c = Campaign()
 
 def main():
     print("Not affiliated with Wizards of the Coast LLC")
