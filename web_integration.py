@@ -5,7 +5,6 @@ Created on Fri Jun 24 13:37:31 2022
 @author: Nevermore
 """
 
-from campaign import Campaign
 from flask import Flask, render_template, request
 from player_character import Character
 
@@ -28,5 +27,9 @@ def games():
         return render_template('character.html',char=char)
     return render_template('game.html')
 
+@app.route("/home")
+def home():
+    return render_template('init_index.html')
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run()
