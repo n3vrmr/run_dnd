@@ -1,6 +1,7 @@
+<!doctype html>
 {% extends 'layout.html' %}
 {% block conteudo %}
 
-<h1>{{ char.char_class}}</h1>
+<h1>{{ char._name, char.char_class, char.level, char.race}}</h1>
 
 {% endblock conteudo %}

@@ -28,6 +28,7 @@ h1 {
 img {
   max-width: 100%;
   display: block;
+  
 }
 
 .header {
@@ -53,6 +54,17 @@ img {
     z-index: -1;
 }
 
+p {
+    text-align: center;
+    margin-top: 25px;
+
+}
+
+li {
+    text-align: center;
+    font-size: 4.0rem;
+    
+}
 #main-menu {
   display: block;
   height: 80px;
