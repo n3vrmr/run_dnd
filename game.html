@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% block conteudo %}
+
+<h1> Game </h1>
+<section class="grid3">
+    <p> Crie seu personagem aqui.
+    <form action="/games" method="POST">
+      <input type="username" name="Player name" placeholder="Player name">
+      <input type="username" name="Character name" placeholder="Character name">
+      <input type="text" name="Character level" placeholder="Character level">
+      <select name="Race">
+          <option value="">Choose your race</option>
+          <option value="human">Human</option>
+          <option value="Half elf">Half elf</option>
+          <option value="Half orc">Half orc</option>
+          <option value="Tiefling">Tiefling</option>
+      </select>
+      <select name="Class">
+          <option value="">Choose your class</option>
+          <option value="barbarian">Barbarian</option>
+          <option value="Half elf">Half elf</option>
+          <option value="Half orc">Half orc</option>
+          <option value="Tiefling">Tiefling</option>
+      </select>
+      <select name="Skills" size=2 multiple>
+          <option value="">Choose your skills</option>
+          <option value="athletics">athletics</option>
+          <option value="nature">nature</option>
+          <option value="Half orc">Half orc</option>
+          <option value="Tiefling">Tiefling</option>
+      </select>
+      <input type="submit" value="Create a character">
+    </form>
+
+</section>
+
+{% endblock conteudo %}

@@ -36,9 +36,15 @@ class Player:
 class Character:
     """Create a character in the Dungeons & Dragons 5th Edition format.
     """
-    def __init__(self, name, level:int):
-        self._name = input("Character name: ")
-        self.level = int(input("Character level: "))
+    def __init__(self, name, char_name="", level="", race="", char_class="", skills="", random=""):
+        if char_name == "":
+            self._name = input("Character name: ")
+        else:
+            self._name = char_name
+        if level=="":
+            self.level = int(input("Character level: "))
+        else:
+            self.level = int(level)
         self.save_proficiencies = {"Strength":False, "Dexterity":False,
                                    "Constitution":False, "Intelligence":False,
                                    "Wisdom":False, "Charisma":False}
@@ -54,14 +60,20 @@ class Character:
         self.set_weapon_proficiencies()
         self.size = "Medium"
         self.speed = 30
-        self.random = input("Generate random? Reply Y for yes or N for no. ").strip().lower()
-        if "y" in self.random:
-            self.random = True
-        elif "n" in self.random:
-            self.random = False
+        if random=="":
+            self.random = input("Generate random? Reply Y for yes or N for no. ").strip().lower()
+            if "y" in self.random:
+                self.random = True
+            elif "n" in self.random:
+                self.random = False
+        else:
+            self.random = random
         self.abilities()
-        self.race = Race.choosing()
-        self.languages = Race.languages(self)
+        if race == "":
+            self.race = Race.choosing()
+        else:
+            self.race=race
+        # self.languages = Race.languages(self)
         self.no_subrace = ["human", "half elf", "half orc",
                       "tiefling", "goliath"]
         if self.race not in self.no_subrace:
@@ -75,13 +87,19 @@ class Character:
         if self.race not in self.no_subrace:
             Subrace.subrace_attributes(self)
         self.proficiency()
-        self.char_class = Classes.choosing(self)
+        if char_class == "":
+            self.char_class = Classes.choosing(self)
+        else:
+            self.char_class=char_class
         self.char_subclass = Subclasses.choosing_subclass(self)
         self.hp_total = Classes.hitpoints(self)
         self.hp_current = self.hp_total
         Classes.set_class(self)
         Classes.saves(self)
-        Classes.skills(self)
+        if skills == "":
+            Classes.skills(self)
+        else:
+            self.skill_proficiencies[skills]=True
         Subclasses.set_subclass(self)
         self.inventory = []
         self.convert_weapon_proficiency()
